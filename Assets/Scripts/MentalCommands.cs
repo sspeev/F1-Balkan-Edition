@@ -9,7 +9,7 @@ public class MentalCommands : MonoBehaviour
     BCITraining _bciTraining = new BCITraining();
     bool mentalCmdRcvd = false;
     string mentalCommand;
-    Rigidbody ball;
+    public Rigidbody car;
 
     [SerializeField]
     float thrust = 20.0f;
@@ -22,16 +22,14 @@ public class MentalCommands : MonoBehaviour
     {
         DataStreamName.DevInfos, DataStreamName.MentalCommands, DataStreamName.SysEvents
     };
-    string profileName = "Chris";
+    string profileName = "speev";
     string headSetId = "";
 
-    // Start is called before the first frame update
     void Start()
     {
         // start connect and authorize
         DataStreamManager.Instance.StartAuthorize();
         _bciTraining.Init(); //IAW email from Emotiv
-        ball = GetComponent<Rigidbody>();
     }
     private void OnGUI()
     {
@@ -69,56 +67,24 @@ public class MentalCommands : MonoBehaviour
 
             if (mentalCommand == "push")
             {
-                ball.AddForce(forward * thrust);
+                car.AddForce(forward * thrust);
             }
             if (mentalCommand == "pull")
             {
-                ball.AddForce(pull * thrust);
+                car.AddForce(pull * thrust);
             }
             if (mentalCommand == "right")
             {
-                ball.AddForce(right * thrust);
+                car.AddForce(right * thrust);
             }
             if (mentalCommand == "left")
             {
-                ball.AddForce(left * thrust);
+                car.AddForce(left * thrust);
             }
         }
-    }
-    public string getMentalCommandAction()
-    {
-        return action;
-    }
-    public double getMentalCommandPower()
-    {
-        return power;
     }
     private void onMentalCommandReceived(double time, string act,  double pow)
     {
 
     }
-    private void OnMentalCommandReceived(object sender, ArrayList data)
-    {
-        if (_mentalCommandLists == null || _mentalCommandLists.Count != data.Count)
-        {
-            Debug.LogAssertion("OnMentalCommandReceived: Mismatch between data and label");
-            return;
-        }
-        double time = Convert.ToDouble(data[0]);
-        string act = Convert.ToString(data[1]);
-        double pow = Convert.ToDouble(data[2]);
-        MentalCommandEventArgs comEvent = new MentalCommandEventArgs(time, act, pow);
-        string comListsStr = "";
-        foreach (var ele in _mentalCommandLists)
-        {
-            comListsStr += ele + " , ";
-        }
-        Debug.Log("MentalCommand labels: " + comListsStr);
-        Debug.Log("Mentalcommand datas: " + comEvent.Time.ToString() + " , " + comEvent.Act + " , " + comEvent.Pow);
-        action = comEvent.Act;
-        power = comEvent.Pow;
-        // TODO: emit event to other modules 
-        //MentalCommandReceived(this, comEvent);
-    }
-    
 }
