@@ -259,7 +259,6 @@ public class CarAudio : MonoBehaviour
             pitch = 1.7f;
         }
         audioSource.pitch = pitch;
-        Debug.Log(gear);
     }
     private void DecreaseGears()
     {
@@ -280,6 +279,5 @@ public class CarAudio : MonoBehaviour
             pitch = 1.3f;
         }
         audioSource.pitch = pitch;
-        Debug.Log(gear);
     }
 }

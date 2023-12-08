@@ -1,4 +1,5 @@
 using EmotivUnityPlugin;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EmotivControlTest : MonoBehaviour
@@ -9,15 +10,15 @@ public class EmotivControlTest : MonoBehaviour
     private readonly string clientSecret = "xAwmtNXPNBkczijYGA3clI0jP4JVLhpuvCASolQuVuJrX4E8qmbgpumMUWI7TaJw9Nqi3Zpiz13Wv6WvK2zE2iICuVSjtRGAlcs3bKeBbVgUXHq9XOMLXwYCpIxvGsnn";
     private readonly string appName = "UnityApp";
     private readonly string appVersion = "3.6.9 ";
-    private readonly string headSetId = "";
+    private readonly string headSetId = "INSIGHT2-A3D2048A";
     private DataStreamManager dsm = DataStreamManager.Instance;
 
-    private readonly Channels[] channels =
+    private readonly List<string> channels = new()
         {
-        Channels.AF4,
-        Channels.AF3,
-        Channels.T7,
-        Channels.T8
+        "AF4",
+        "AF3",
+        "T7",
+        "T8"
     };
 
     private void Awake()
@@ -28,7 +29,6 @@ public class EmotivControlTest : MonoBehaviour
 
     void Update()
     {
-        dsm.QueryHeadsets(headSetId);
         // Check to call scan headset if no session is created and no scanning headset
         if (!eup.IsSessionCreated && !dsm.IsHeadsetScanning)
         {
@@ -41,6 +41,14 @@ public class EmotivControlTest : MonoBehaviour
         }
         eup.CreateSessionWithHeadset(headSetId);
 
+        if (eup.IsSessionCreated)
+        {
+            eup.SubscribeData(channels);
+            double[] eegData = eup.GetMotionData(Channel_t.CHAN_AF4);
 
+            Debug.Log(eegData);
+        }
+        eup.SubscribeData(channels);
+        double[] motionData = eup.GetMotionData(Channel_t.CHAN_Q0);
     }
 }
