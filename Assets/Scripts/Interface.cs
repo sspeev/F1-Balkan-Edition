@@ -1,10 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Interface : MonoBehaviour
 {
+    [SerializeField]
+    private Canvas options;
+
+    [SerializeField]
+    private Canvas main;
+
+    [SerializeField]
+    private Toggle brainControls;
+
+    public bool BrainControls { get; set; } = false;
+
     public void LoadGame()
     {
         SceneManager.LoadScene("GameScene");
@@ -20,5 +30,23 @@ public class Interface : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+    public void Options()
+    {
+        if (main.gameObject.activeSelf == true)
+        {
+            main.gameObject.SetActive(false);
+            options.gameObject.SetActive(true);
+        }
+        else
+        {
+            main.gameObject.SetActive(true);
+            options.gameObject.SetActive(false);
+        }
+        if (brainControls.isOn)
+        {
+            BrainControls = true;
+        }
+        else BrainControls = false;
     }
 }

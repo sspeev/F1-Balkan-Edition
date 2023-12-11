@@ -3140,6 +3140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3babab847bdc18489fcd8fb8cc910bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  options: {fileID: 0}
+  main: {fileID: 0}
+  brainControls: {fileID: 0}
 --- !u!114 &119807797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9707,6 +9710,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 467117798}
   m_Mesh: {fileID: -2487563971698102967, guid: 278c9adbbb94ed14caf383a812df207a, type: 3}
+--- !u!1 &469693068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 469693070}
+  - component: {fileID: 469693069}
+  m_Layer: 0
+  m_Name: EmotivControlsObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &469693069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469693068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7969c3130def04fa30b6ca09e6f20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EmotivGameObj: {fileID: 469693068}
+--- !u!4 &469693070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469693068}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -411.32, y: 11.85, z: -82.09}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &473779435
 GameObject:
   m_ObjectHideFlags: 0
@@ -10402,6 +10450,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3babab847bdc18489fcd8fb8cc910bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  options: {fileID: 0}
+  main: {fileID: 0}
+  brainControls: {fileID: 0}
 --- !u!1 &492586398
 GameObject:
   m_ObjectHideFlags: 0
@@ -81028,7 +81079,6 @@ GameObject:
   - component: {fileID: 6435032305040760288}
   - component: {fileID: 6435032305040760291}
   - component: {fileID: 6435032305040760292}
-  - component: {fileID: 6435032305040760293}
   m_Layer: 0
   m_Name: Audi F1 Car
   m_TagString: Untagged
@@ -83943,18 +83993,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6435032305040760293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5910415293811672928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c7969c3130def04fa30b6ca09e6f20d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6435683176744920803
 GameObject:
   m_ObjectHideFlags: 0
@@ -95917,3 +95955,4 @@ SceneRoots:
   - {fileID: 1721787231}
   - {fileID: 119807795}
   - {fileID: 492513387}
+  - {fileID: 469693070}
