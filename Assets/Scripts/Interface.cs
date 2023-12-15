@@ -25,7 +25,7 @@ public class Interface : MonoBehaviour
     }
     public void Welcome()
     {
-        SceneManager.LoadScene("ShowRoom");
+        SceneManager.LoadScene("MenuScene");
     }
     public void ExitGame()
     {
