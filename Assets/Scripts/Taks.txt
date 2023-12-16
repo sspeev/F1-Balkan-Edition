@@ -1,7 +1,6 @@
 Interface
 Soft body
 Terrain
-Timer
 AI cars
 Lobby music visulizer
 
