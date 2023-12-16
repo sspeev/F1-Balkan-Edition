@@ -2,7 +2,7 @@ Interface
 Soft body
 Terrain
 AI cars
-Lobby music visulizer.
+Lobby music visulizer
 
 client secret: xAwmtNXPNBkczijYGA3clI0jP4JVLhpuvCASolQuVuJrX4E8qmbgpumMUWI7TaJw9Nqi3Zpiz13Wv6WvK2zE2iICuVSjtRGAlcs3bKeBbVgUXHq9XOMLXwYCpIxvGsnn
 
