@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Interface : MonoBehaviour
@@ -14,43 +12,14 @@ public class Interface : MonoBehaviour
     [SerializeField]
     private Toggle brainControls;
 
-    private Dictionary<string, int> scenes = new()
-    {
-        {"GameWelcomeScene", 0},
-        {"MenuScene", 1},
-        { "GameScene", 2 },
-        {"TutorialTrack", 3}
-    };
-
-    public LoadingScreen loader;
-
     public bool BrainControls { get; set; } = false;
 
-    public void LoadGame()
-    {
-        loader.LoadScene(scenes["GameScene"]);
-    }
-    public void LoadTutorialTrack()
-    {
-        SceneManager.LoadScene("TutorialTrack");
-    }
-    public void LoadMenu()
-    {
-        SceneManager.LoadScene("MenuScene");
-    }
-    public void ExitGame()
-    {
-        Application.Quit();
-    }
     public void Home()
     {
-        if (main.gameObject.activeSelf == true)
-        {
-            main.gameObject.SetActive(false);
-        }
-        else
+        if (main.gameObject.activeSelf == false)
         {
             main.gameObject.SetActive(true);
+            options.gameObject.SetActive(false);
         }
     }
     public void Options()
@@ -65,5 +34,9 @@ public class Interface : MonoBehaviour
             BrainControls = true;
         }
         else BrainControls = false;
+    }
+    public void Exit()
+    {
+        Application.Quit();
     }
 }
