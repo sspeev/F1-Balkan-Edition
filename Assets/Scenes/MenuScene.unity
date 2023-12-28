@@ -1498,7 +1498,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2990,7 +2990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7bafeefd554a59499dee06063fc4290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  spinSpeed: 0
 --- !u!4 &2031136499
 Transform:
   m_ObjectHideFlags: 0
