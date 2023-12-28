@@ -22,7 +22,7 @@ public class Interface : MonoBehaviour
         {"TutorialTrack", 3}
     };
 
-    public LoadingScene loader = new();
+    public LoadingScreen loader;
 
     public bool BrainControls { get; set; } = false;
 

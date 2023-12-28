@@ -1,11 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoadingScene : MonoBehaviour
+public class LoadingScreen : MonoBehaviour
 {
-    public GameObject LoadingScreen;
+    public GameObject loadingScreen;
     public Image LoadingBarFill;
 
     public void LoadScene(int sceneId)
@@ -17,7 +18,7 @@ public class LoadingScene : MonoBehaviour
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
 
-        LoadingScreen.SetActive(true);
+        loadingScreen.SetActive(true);
         gameObject.SetActive(false);
         while (!operation.isDone)
         {
