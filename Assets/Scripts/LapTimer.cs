@@ -1,9 +1,10 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LapTimer : MonoBehaviour
 {
-    public Text timerText;
+    public TMP_Text timerText;
     private float currentTime;
 
     void Start()
