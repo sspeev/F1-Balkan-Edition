@@ -17,11 +17,25 @@ public class LeftRightMovement : MonoBehaviour
 
     public void Right()
     {
-        camera.position = new Vector3(camera.position.x + 0.4f, camera.position.y, camera.position.z + 14f);
+        if(camera.position.z == -9f)
+        {
+            camera.position = new Vector3(camera.position.x, camera.position.y, 45f);
+        }
+        else
+        {
+            camera.position = new Vector3(camera.position.x, camera.position.y, camera.position.z - 18f);
+        }
     }
 
     public void Left()
     {
-        camera.position = new Vector3(camera.position.x - 0.4f, camera.position.y, camera.position.z - 14f);
+        if(camera.position.z == 45f)
+        {
+            camera.position = new Vector3(camera.position.x, camera.position.y, -9f);
+        }
+        else
+        {
+            camera.position = new Vector3(camera.position.x, camera.position.y, camera.position.z + 18f);
+        }
     }
 }
