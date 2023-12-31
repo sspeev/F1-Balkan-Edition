@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TutorialTrack.unity
     guid: 9f4e09d0adc7a954294650dbb5dec8ec
+  - enabled: 1
+    path: Assets/Scenes/ShowRoomScene.unity
+    guid: a6b709a9dfc9329489c2c9f69263f28a
   m_configObjects: {}

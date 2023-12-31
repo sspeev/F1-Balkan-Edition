@@ -4,8 +4,13 @@ using UnityEngine.UI;
 
 public class LapTimer : MonoBehaviour
 {
-    public TMP_Text timerText;
+    [SerializeField]
+    private TMP_Text timerText;
+
+    [SerializeField]
+    private BoxCollider startFinishCollider;
     private float currentTime;
+    
 
     void Start()
     {
