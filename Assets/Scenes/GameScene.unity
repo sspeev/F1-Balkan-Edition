@@ -3038,6 +3038,7 @@ GameObject:
   - component: {fileID: 119807792}
   - component: {fileID: 119807797}
   - component: {fileID: 119807798}
+  - component: {fileID: 119807799}
   m_Layer: 5
   m_Name: WindowsUI
   m_TagString: Untagged
@@ -3122,6 +3123,7 @@ RectTransform:
   m_Children:
   - {fileID: 1609755530}
   - {fileID: 1463257517}
+  - {fileID: 1884732623}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3155,6 +3157,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fd2b44c3498d34bbada1837964ed3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &119807799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119807791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d31f3232bbbe43f498125955e3cc8a3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MessageLog: {fileID: 1884732624}
 --- !u!1 &121763723
 GameObject:
   m_ObjectHideFlags: 0
@@ -47862,6 +47877,85 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880865021}
   m_Mesh: {fileID: -7392592909594558048, guid: 7827ac7a6723ad24493257d6e9ee9ad4, type: 3}
+--- !u!1 &1884732622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1884732623}
+  - component: {fileID: 1884732625}
+  - component: {fileID: 1884732624}
+  m_Layer: 5
+  m_Name: Text (Legacy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1884732623
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884732622}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 119807795}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -32.1179}
+  m_SizeDelta: {x: 0, y: 215.295}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1884732624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884732622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.02114594, g: 1, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 20
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Data:'
+--- !u!222 &1884732625
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884732622}
+  m_CullTransparentMesh: 1
 --- !u!1 &1886322766
 GameObject:
   m_ObjectHideFlags: 0
@@ -81558,7 +81652,6 @@ GameObject:
   - component: {fileID: 6435032305040760291}
   - component: {fileID: 6435032305040760292}
   - component: {fileID: 6435032305040760293}
-  - component: {fileID: 6435032305040760294}
   m_Layer: 0
   m_Name: Audi F1 Car
   m_TagString: Untagged
@@ -84482,24 +84575,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5910415293811672928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c7969c3130def04fa30b6ca09e6f20d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b3f98d5509d7854ebf79a32bd280724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EmotivGameObj: {fileID: 0}
---- !u!114 &6435032305040760294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5910415293811672928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e8a1c65bde7a5d4f94c7fc227f2c190, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  motHeader: {fileID: 0}
-  motData: {fileID: 0}
+  api: https://localhost:7008/
 --- !u!1 &6435683176744920803
 GameObject:
   m_ObjectHideFlags: 0
@@ -88034,7 +88113,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

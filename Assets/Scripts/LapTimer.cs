@@ -10,7 +10,8 @@ public class LapTimer : MonoBehaviour
     [SerializeField]
     private BoxCollider startFinishCollider;
     private float currentTime;
-    
+
+    public string TimeToPost { get; set; }
 
     void Start()
     {
@@ -21,6 +22,11 @@ public class LapTimer : MonoBehaviour
     {
         currentTime += Time.deltaTime;
         UpdateTimerText();
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+       TimeToPost = timerText.text;
+        currentTime = 0f;
     }
 
     void UpdateTimerText()
