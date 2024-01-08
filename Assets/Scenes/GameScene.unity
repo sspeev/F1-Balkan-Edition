@@ -81653,7 +81653,6 @@ GameObject:
   - component: {fileID: 6435032305040760291}
   - component: {fileID: 6435032305040760292}
   - component: {fileID: 6435032305040760293}
-  - component: {fileID: 6435032305040760294}
   m_Layer: 0
   m_Name: Audi F1 Car
   m_TagString: Untagged
@@ -84581,18 +84580,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MessageLog: {fileID: 1884732624}
---- !u!114 &6435032305040760294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5910415293811672928}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c7969c3130def04fa30b6ca09e6f20d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6435683176744920803
 GameObject:
   m_ObjectHideFlags: 0

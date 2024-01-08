@@ -5,20 +5,37 @@ using UnityEngine.UI;
 using System;
 
 
+
+
+
+
+/*
+ 
+ Smenqi HEADSET IDTO
+ */
+
+
+
+
+
+
+
+
 public class MentalCommands : MonoBehaviour
 {
     // Please fill clientId and clientSecret of your application before starting
     private readonly string clientId = "oXwnHROVKZ1Lp7gxWpiY6RBm6sMBqzc6t1GndjZ0";
     private readonly string clientSecret = "025Uv4QWYHVaj69NNhx3udmU6f1r7wXG5H7WOiDwBNvSnSem8M5xyHmnSN37DhzwvgeGaRsWxvbQtwVhI7G3m1kf6XGB5knCWvEh0j4L5P8jBIIe19hWY8yxjGlRaOlc";
     private readonly string appName = "F1BalkanEdition";
-    private readonly string appVersion = "3.7.2 ";
-    private readonly string headSetId = "INSIGHT2-A3D2048A";
+    private readonly string appVersion = "3.7.5";
+    private readonly string headSetIdSchool = "INSIGHT2-A3D2048A";
+    private readonly string headSetId = "INSIGHT2-F144C750";
 
 
     EmotivUnityItf _eItf = EmotivUnityItf.Instance;
     float _timerDataUpdate = 0;
     const float TIME_UPDATE_DATA = 1f;
-    bool _isDataBufferUsing = true; // default subscribed data will not saved to Data buffer
+    bool _isDataBufferUsing = false; // default subscribed data will not saved to Data buffer
 
 
     private readonly string recordTitle = "record1";     // record Title
@@ -30,7 +47,7 @@ public class MentalCommands : MonoBehaviour
     //[SerializeField] public InputField  MarkerValue;     // marker value
     //[SerializeField] public InputField  MarkerLabel;     // marker Label
     private bool EEGToggle = true;
-    private bool MOTToggle = true;
+    private bool MOTToggle = false;
     private bool PMToggle = false;
     private bool CQToggle = false;
     private bool POWToggle = false;
@@ -39,30 +56,13 @@ public class MentalCommands : MonoBehaviour
     private bool FEToggle = false;
     private bool SYSToggle = false;
 
-    [SerializeField] 
+    [SerializeField]
     private Text MessageLog;
-
-    private readonly List<string> channels = new()
-        {
-        "AF4",
-        "AF3",
-        "T7",
-        "T8"
-    };
-
-    private readonly List<Channels_Motion_v2> channelsMot = new()
-        {
-        Channels_Motion_v2.Q0,
-        Channels_Motion_v2.Q1,
-        Channels_Motion_v2.Q2,
-        Channels_Motion_v2.Q3,
-    };
-
 
     void Start()
     {
         // init EmotivUnityItf without data buffer using
-        _eItf.Init(clientId, clientSecret, appName, appVersion, _isDataBufferUsing);
+        _eItf.Init(clientId, clientSecret, appName, appVersion);
 
         // Start
         _eItf.Start();
@@ -102,34 +102,34 @@ public class MentalCommands : MonoBehaviour
             return;
         }
 
-        // Check buttons interactable
-        //CheckButtonsInteractable();
+        onCreateSessionBtnClick();
+        onSubscribeBtnClick();
 
-        // If save data to Data buffer. You can do the same EEG to get other data streams
-        // Otherwise check output data at OnEEGDataReceived(), OnMotionDataReceived() ..etc..
-        if (_isDataBufferUsing)
+        int counter = 0;
+        string motionHeaderStr = "Motion Header: ";
+        string motionDataStr = "Motion Data: ";
+        var input = new InputDataController();
+        foreach (var ele in _eItf.GetMotionChannels())
         {
-
-            // get eeg data
-            //if (_eItf.GetMotionChannels() > 0)
-            //{
-                string eegHeaderStr = "EEG Header: ";
-                string eegDataStr = "EEG Data: ";
-                foreach (var ele in _eItf.GetMotionChannels())
-                {
-                    string chanStr = ChannelStringList.ChannelToString(ele);
-                    double[] data = _eItf.GetMotionChannels(ele);
-                    eegHeaderStr += chanStr + ", ";
-                    if (data != null && data.Length > 0)
-                        eegDataStr += data[0].ToString() + ", ";
-                    else
-                        eegDataStr += "null, "; // for null value
-                }
-                string msgLog = eegHeaderStr + "\n" + eegDataStr;
-                MessageLog.text = msgLog;
-            //}
+            if (counter < 3)
+            {
+                counter++;
+                continue;
+            }
+            string chanStr = ChannelStringList.ChannelToString(ele);
+            double[] data = _eItf.GetMotionData(ele);
+            motionHeaderStr += chanStr + ", ";
+            if (data != null && data.Length > 0)
+            {
+                motionDataStr += data[0].ToString() + ", ";
+                input.MoveInput = (int)data[0];
+            }
+                
+            else
+                motionDataStr += "null, "; // for null value
         }
-
+        string msgLog = motionHeaderStr + "\n" + motionDataStr;
+        MessageLog.text = msgLog;
     }
 
     /// <summary>
@@ -238,7 +238,7 @@ public class MentalCommands : MonoBehaviour
     public void onUnLoadProfileBtnClick()
     {
         Debug.Log("onUnLoadProfileBtnClick " + ProfileName);
-        _eItf.UnLoadProfile(ProfileName );
+        _eItf.UnLoadProfile(ProfileName);
     }
 
     /// <summary>
@@ -346,43 +346,47 @@ public class MentalCommands : MonoBehaviour
 
     private List<string> GetStreamsList()
     {
-        List<string> _streams = new List<string> { };
-        if (EEGToggle)
+        List<string> _streams = new()
         {
-            _streams.Add("eeg");
-        }
-        if (MOTToggle)
-        {
-            _streams.Add("mot");
-        }
-        if (PMToggle)
-        {
-            _streams.Add("met");
-        }
-        if (CQToggle)
-        {
-            _streams.Add("dev");
-        }
-        if (SYSToggle)
-        {
-            _streams.Add("sys");
-        }
-        if (EQToggle)
-        {
-            _streams.Add("eq");
-        }
-        if (POWToggle)
-        {
-            _streams.Add("pow");
-        }
-        if (FEToggle)
-        {
-            _streams.Add("fac");
-        }
-        if (COMToggle)
-        {
-            _streams.Add("com");
-        }
+            //"eeg",
+            "mot"
+        };
+        //if (EEGToggle)
+        //{
+        //    _streams.Add("eeg");
+        //}
+        //if (MOTToggle)
+        //{
+        //    _streams.Add("mot");
+        //}
+        //if (PMToggle)
+        //{
+        //    _streams.Add("met");
+        //}
+        //if (CQToggle)
+        //{
+        //    _streams.Add("dev");
+        //}
+        //if (SYSToggle)
+        //{
+        //    _streams.Add("sys");
+        //}
+        //if (EQToggle)
+        //{
+        //    _streams.Add("eq");
+        //}
+        //if (POWToggle)
+        //{
+        //    _streams.Add("pow");
+        //}
+        //if (FEToggle)
+        //{
+        //    _streams.Add("fac");
+        //}
+        //if (COMToggle)
+        //{
+        //    _streams.Add("com");
+        //}
         return _streams;
     }
 }
