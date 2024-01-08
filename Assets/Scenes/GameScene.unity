@@ -73032,6 +73032,7 @@ GameObject:
   - component: {fileID: 7302873865739339793}
   - component: {fileID: 7302873865739339794}
   - component: {fileID: 7302873865739339795}
+  - component: {fileID: 7302873865739339796}
   m_Layer: 0
   m_Name: Start/Finish Arch
   m_TagString: Untagged
@@ -81652,6 +81653,7 @@ GameObject:
   - component: {fileID: 6435032305040760291}
   - component: {fileID: 6435032305040760292}
   - component: {fileID: 6435032305040760293}
+  - component: {fileID: 6435032305040760294}
   m_Layer: 0
   m_Name: Audi F1 Car
   m_TagString: Untagged
@@ -84575,10 +84577,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5910415293811672928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b3f98d5509d7854ebf79a32bd280724, type: 3}
+  m_Script: {fileID: 11500000, guid: d31f3232bbbe43f498125955e3cc8a3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  api: https://localhost:7008/
+  MessageLog: {fileID: 1884732624}
+--- !u!114 &6435032305040760294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5910415293811672928}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7969c3130def04fa30b6ca09e6f20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6435683176744920803
 GameObject:
   m_ObjectHideFlags: 0
@@ -88119,6 +88133,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.0000005, y: 2.351286, z: 11.299999}
   m_Center: {x: 0, y: 0.17564249, z: -4.6499987}
+--- !u!114 &7302873865739339796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142096519515501754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4386a4ea59adba64880be6c36690221a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colider: {fileID: 7302873865739339795}
 --- !u!4 &7305461540744067651
 Transform:
   m_ObjectHideFlags: 0
