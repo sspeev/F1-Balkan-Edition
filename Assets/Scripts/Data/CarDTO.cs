@@ -1,6 +1,6 @@
 ﻿public class CarDTO
 {
-    public string Model { get; set; }
+    public string Model;
 
-    public string Power { get; set; }
+    public string Power;
 }

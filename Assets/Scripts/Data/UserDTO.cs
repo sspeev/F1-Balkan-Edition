@@ -2,10 +2,14 @@ using UnityEngine;
 
 public class UserDTO : MonoBehaviour
 {
+    public UserDTO()
+    {
+        Car = new();
+    }
 
-    public string LapTime { get; set; }
+    public string LapTime;
 
-    public int Rank { get; set; }
+    public int Rank;
 
-    public CarDTO Car { get; set; }
+    public CarDTO Car;
 }

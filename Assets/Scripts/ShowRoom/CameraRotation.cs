@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CameraRotation : MonoBehaviour
 {
-    public float spinSpeed;
-
+    [SerializeField]
+    private float spinSpeed;
 
     void Update()
     {

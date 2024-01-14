@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Here are implemented the OnClick action on the buttons in the main menu
+/// </summary>
 public class Interface : MonoBehaviour
 {
     [SerializeField]
