@@ -40,6 +40,7 @@ public class CarController : MonoBehaviour
     public Rigidbody carRb;
     [SerializeField] private Joystick joystick;
     private InputDataController inputData;
+    private MentalCommandsController mentalCommandsController;
 
     public int DriveSpeed
     {
@@ -53,6 +54,7 @@ public class CarController : MonoBehaviour
     void Start()
     {
         inputData = GetComponent<InputDataController>();
+        mentalCommandsController = GetComponent<MentalCommandsController>();
     }
 
     async void Update()
@@ -75,7 +77,11 @@ public class CarController : MonoBehaviour
     }
     private void GetInput()
     {
-        moveInput = inputData.MoveInput;
+        
+        if (mentalCommandsController.IsReadyToDrive)
+        {
+            moveInput = inputData.MoveInput;
+        }
         steerInput = inputData.SteerInput;
         brakeInput = inputData.BrakeInput;
         if (joystick.isActiveAndEnabled)

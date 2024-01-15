@@ -15,3 +15,13 @@ client id: JutlzIB6HAAlmK1OnepyRRw7Z44ygsSx5gOsqSHB
 
 fix game manager dependecies on the progress bar
 fix Interface dependencies on the Toggle brain controls
+
+
+	   Q0
+<- Q1      Q3 ->
+	   Q2
+
+Q0 - poitive
+Q1 - positive
+Q2 - negative
+Q3 - negative

@@ -29,8 +29,8 @@ public class MentalCommandsController : MonoBehaviour
     private readonly string clientSecret = "025Uv4QWYHVaj69NNhx3udmU6f1r7wXG5H7WOiDwBNvSnSem8M5xyHmnSN37DhzwvgeGaRsWxvbQtwVhI7G3m1kf6XGB5knCWvEh0j4L5P8jBIIe19hWY8yxjGlRaOlc";
     private readonly string appName = "F1BalkanEdition";
     private readonly string appVersion = "3.7.5";
-    private readonly string headSetIdSchool = "INSIGHT2-A3D2048A";
-    private readonly string headSetId = "INSIGHT2-F144C750";
+    private readonly string headSetId = "INSIGHT2-A3D2048A";//school
+    private readonly string headSetIdSchool = "INSIGHT2-F144C750";//home
 
 
     EmotivUnityItf _eItf = EmotivUnityItf.Instance;
@@ -59,9 +59,17 @@ public class MentalCommandsController : MonoBehaviour
 
     [SerializeField]
     private Text MessageLog;
+    InputDataController input;
+
+    public bool IsReadyToDrive
+    {
+        get => _eItf.IsAuthorizedOK;
+    }
 
     void Start()
     {
+
+        input = GetComponent<InputDataController>();
         // init EmotivUnityItf without data buffer using
         _eItf.Init(clientId, clientSecret, appName, appVersion);
 
@@ -106,32 +114,63 @@ public class MentalCommandsController : MonoBehaviour
         onCreateSessionBtnClick();
         onSubscribeBtnClick();
 
-        int counter = 0;
+        //int counter = 0;
         string motionHeaderStr = "Motion Header: ";
         string motionDataStr = "Motion Data: ";
-        var input = new InputDataController();
         foreach (var ele in _eItf.GetMotionChannels())
         {
-            if (counter < 3)
-            {
-                counter++;
-                continue;
-            }
-            string chanStr = ChannelStringList.ChannelToString(ele);
-            double[] data = _eItf.GetMotionData(ele);
+            //if (counter < 3)
+            //{
+            //    counter++;
+            //    continue;
+            //}
+            //string chanStr = ChannelStringList.ChannelToString(ele);
+            //double[] data = _eItf.GetMotionData(ele);
+            //motionHeaderStr += chanStr + ", ";
+            //if (data != null && data.Length > 0)
+            //{
+            //    motionDataStr += data[0].ToString() + ", ";
+            //    input.MoveInput = (float)data[0];
+            //    input.SteerInput = (float)data[1];
+            //    input.BrakeInput = (float)data[2];
+            //}
+
+            //else
+            //    motionDataStr += "null, "; // for null value
+        }
+        Channel_Q0();
+        Channel_Q1();
+        string msgLog = motionHeaderStr + "\n" + motionDataStr;
+        MessageLog.text = msgLog;
+
+        void Channel_Q0()
+        {
+            string chanStr = ChannelStringList.ChannelToString(Channel_t.CHAN_Q0);
+            double[] data = _eItf.GetMotionData(Channel_t.CHAN_Q0);
             motionHeaderStr += chanStr + ", ";
             if (data != null && data.Length > 0)
             {
                 motionDataStr += data[0].ToString() + ", ";
-                input.MoveInput = (int)data[0];
+                input.MoveInput = 1.1f * (float)data[0];
             }
-                
             else
                 motionDataStr += "null, "; // for null value
         }
-        string msgLog = motionHeaderStr + "\n" + motionDataStr;
-        MessageLog.text = msgLog;
+        void Channel_Q1()
+        {
+            string chanStr = ChannelStringList.ChannelToString(Channel_t.CHAN_Q2);
+            double[] data = _eItf.GetMotionData(Channel_t.CHAN_Q2);
+            motionHeaderStr += chanStr + ", ";
+            if (data != null && data.Length > 0)
+            {
+                motionDataStr += data[0].ToString() + ", ";
+                input.SteerInput = 1.1f * (float)data[0];
+            }
+            else
+                motionDataStr += "null, "; // for null value
+        }
     }
+
 
     /// <summary>
     /// create session 
