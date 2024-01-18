@@ -77,21 +77,21 @@ public class CarController : MonoBehaviour
     }
     private void GetInput()
     {
-        if (ui.BrainControls)
-        {
-
-        }
-        else if (!ui.BrainControls)
-        {
+        //if (ui.BrainControls)
+        //{
+        //    //to do
+        //}
+        //else if (!ui.BrainControls)
+        //{
             moveInput = inputData.MoveInput;
             steerInput = inputData.SteerInput;
             brakeInput = inputData.BrakeInput;
-        }
-        else if (joystick.isActiveAndEnabled)
-        {
-            moveInput = joystick.Vertical;
-            steerInput = joystick.Horizontal;
-        }
+        //}
+        //else if (joystick.isActiveAndEnabled)
+        //{
+        //    moveInput = joystick.Vertical;
+        //    steerInput = joystick.Horizontal;
+        //}
     }
     private void Move()
     {
