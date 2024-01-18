@@ -1,39 +1,35 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LeftRightMovement : MonoBehaviour
 {
-    public Transform camera;
+    [SerializeField]
+    private List<GameObject> cars = new();
 
-    void Start()
-    {
-        camera.position = new Vector3(-17.5f, 1.3f, 45f);
-    }
+    [SerializeField]
+    private new Camera camera;
 
-    void Update()
-    {
-    }
-
+    private int carCounter = 0;
     public void Right()
     {
-        if(camera.position.z == -9f)
-        {
-            camera.position = new Vector3(camera.position.x, camera.position.y, 45f);
-        }
-        else
-        {
-            camera.position = new Vector3(camera.position.x, camera.position.y, camera.position.z - 18f);
-        }
+        if(carCounter > cars.Count) 
+            carCounter = 0;
+
+        LookAtGameObj(camera, cars[carCounter]);
+        carCounter++;
     }
 
     public void Left()
     {
-        if(camera.position.z == 45f)
-        {
-            camera.position = new Vector3(camera.position.x, camera.position.y, -9f);
-        }
-        else
-        {
-            camera.position = new Vector3(camera.position.x, camera.position.y, camera.position.z + 18f);
-        }
+        if (carCounter < 0)
+            carCounter = cars.Count;
+
+        LookAtGameObj(camera, cars[carCounter]);
+        carCounter--;
+    }
+
+    private void LookAtGameObj(Camera camera, GameObject gameObj)
+    {
+        camera.transform.LookAt(gameObj.transform);
     }
 }

@@ -34,6 +34,10 @@ public class InputDataController : MonoBehaviour
             steerInput = value;
         }
     }
+    public float LeftInput { get; set; }
+
+    public float RightInput { get; set; }
+
     public float BrakeInput
     {
         get => brakeInput;
