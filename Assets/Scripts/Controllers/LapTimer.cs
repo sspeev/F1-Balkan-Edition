@@ -13,8 +13,6 @@ public class LapTimer : MonoBehaviour
 
     public string TimeToPost { get; set; }
 
-    public bool IsFormationLapEnded { get; set; } = false;
-
     void Start()
     {
         currentTime = 0f;
@@ -22,11 +20,8 @@ public class LapTimer : MonoBehaviour
 
     void Update()
     {
-        if (IsFormationLapEnded)
-        {
-            currentTime += Time.deltaTime;
-            UpdateTimerText();
-        }
+        currentTime += Time.deltaTime;
+        UpdateTimerText();
     }
 
     void UpdateTimerText()
@@ -40,13 +35,8 @@ public class LapTimer : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (IsFormationLapEnded)
-        {
-            TimeToPost = timerText.text;
-            UpdateTimerText();
-        }
-        else IsFormationLapEnded = true;
-
+        TimeToPost = timerText.text;
+        UpdateTimerText();
     }
     private void OnTriggerStay(Collider other)
     {
