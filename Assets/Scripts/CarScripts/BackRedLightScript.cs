@@ -1,22 +1,14 @@
 using UnityEngine;
 
-/// <summary>
-/// Makes the red light at the rear side of the F1 car to blink in 2 seconds
-/// </summary>
 public class BackRedLightScript : MonoBehaviour
 {
     private new Light light;
     private float timer = 2f;
 
 
-    [SerializeField] 
-    private Transform target;
-
-    [SerializeField] 
-    private Vector3 offset;
-
-    [SerializeField]
-    private float smoothSpeed = 0.125f;
+    public Transform target;
+    public Vector3 offset;
+    public float smoothSpeed = 0.125f;
 
     private void Start()
     {
