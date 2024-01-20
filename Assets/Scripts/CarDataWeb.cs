@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Leguar.TotalJSON;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CarDataWeb : MonoBehaviour
 {
@@ -70,7 +71,7 @@ public class CarDataWeb : MonoBehaviour
     private void ProcessDataValidation()
     {
         //StartCoroutine(LoadCarData());
-        if (currentTime.TimeToPost != null && currentTime.IsFormationLapEnded)
+        if (currentTime.TimeToPost != null && currentTime.IsFormationLapEnded && currentTime.TimeToPost != "00:00:00")
             StartCoroutine(SendCarData());
         currentTime.TimeToPost = null;
     }
