@@ -3,11 +3,23 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using Leguar.TotalJSON;
+using UnityEngine.SceneManagement;
 
 public class CarDataWeb : MonoBehaviour
 {
     [SerializeField]
     private LapTimer currentTime = new();
+    private Scene currScene;
+    private string track;
+
+    [SerializeField]
+    private CarController[] cars;
+
+    private void Start()
+    {
+        currScene = SceneManager.GetActiveScene();
+        track = SceneChecker();
+    }
     private void Update()
     {
         ProcessDataValidation();
@@ -28,17 +40,20 @@ public class CarDataWeb : MonoBehaviour
 
     private IEnumerator SendCarData()
     {
+
         // Create a user object to send to the API
         UserDTO userToSend = new()
         {
             LapTime = currentTime.TimeToPost,
-            Rank = 1,
-            Car = new()
-            {
-                Model = "Hubava",
-                Power = "100"
-            }
+            Track = track
         };
+        foreach (var car in cars)
+        {
+            if (car.carDTO != null)
+            {
+                userToSend.Car = car.carDTO;
+            }
+        }
         // Convert the user object to JSON
         string json = JSON.Serialize(userToSend).CreateString();
 
@@ -55,8 +70,22 @@ public class CarDataWeb : MonoBehaviour
     private void ProcessDataValidation()
     {
         //StartCoroutine(LoadCarData());
-        if (currentTime.TimeToPost != null)
+        if (currentTime.TimeToPost != null && currentTime.IsFormationLapEnded)
             StartCoroutine(SendCarData());
         currentTime.TimeToPost = null;
+    }
+
+    private string SceneChecker()
+    {
+        string currCircuit = string.Empty;
+        if (currScene.name == "GameScene")
+        {
+            currCircuit = "International Balkan Circuit";
+        }
+        else if (currScene.name == "TutorialTrack")
+        {
+            currCircuit = "TutorialTrack";
+        }
+        return currCircuit;
     }
 }

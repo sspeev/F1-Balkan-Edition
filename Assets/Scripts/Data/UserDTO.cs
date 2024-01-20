@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class UserDTO : MonoBehaviour
+public class UserDTO
 {
     public UserDTO()
     {
@@ -9,7 +7,7 @@ public class UserDTO : MonoBehaviour
 
     public string LapTime;
 
-    public int Rank;
+    public string Track;
 
     public CarDTO Car;
 }

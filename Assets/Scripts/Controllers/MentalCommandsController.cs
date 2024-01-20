@@ -13,8 +13,8 @@ public class MentalCommandsController : MonoBehaviour
     private readonly string clientSecret = "025Uv4QWYHVaj69NNhx3udmU6f1r7wXG5H7WOiDwBNvSnSem8M5xyHmnSN37DhzwvgeGaRsWxvbQtwVhI7G3m1kf6XGB5knCWvEh0j4L5P8jBIIe19hWY8yxjGlRaOlc";
     private readonly string appName = "F1BalkanEdition";
     private readonly string appVersion = "3.7.5";
-    private readonly string headSetId = "INSIGHT2-A3D2048A";//school
-    private readonly string headSetIdSchool = "INSIGHT2-F144C750";//home
+    private readonly string headSetIdSchool = "INSIGHT2-A3D2048A";//school
+    private readonly string headSetId = "INSIGHT2-F144C750";//home
 
 
     EmotivUnityItf _eItf = EmotivUnityItf.Instance;
