@@ -17,6 +17,22 @@ public class CarController : MonoBehaviour
         Rear
     }
 
+    public enum CarBrand
+    {
+        Audi,
+        Porsche,
+        Corvette,
+        Ford
+    }
+
+    public enum CarModel
+    {
+        F1Car,
+        _911,
+        ZR11,
+        Mustang
+    }
+
     [Serializable]
     public struct Wheel
     {
@@ -40,7 +56,13 @@ public class CarController : MonoBehaviour
     public Rigidbody carRb;
     [SerializeField] private Joystick joystick;
     private InputDataController inputData;
-    private MentalCommandsController mentalCommandsController;
+    internal CarDTO carDTO;
+
+    [SerializeField]
+    private CarBrand carBrand;
+
+    [SerializeField]
+    private CarModel carModel;
 
     public int DriveSpeed
     {
@@ -54,7 +76,12 @@ public class CarController : MonoBehaviour
     void Start()
     {
         inputData = GetComponent<InputDataController>();
-        mentalCommandsController = GetComponent<MentalCommandsController>();
+        carDTO = new()
+        {
+            CarBrand = carBrand.ToString(),
+            Model = carModel.ToString(),
+            Power = DriveSpeed.ToString()
+        };
     }
 
     async void Update()
@@ -62,6 +89,15 @@ public class CarController : MonoBehaviour
         GetInput();
         await AnimateWheels();
         await WheelEffects();
+        //if (carDTO == null)
+        //{
+        //    carDTO = new()
+        //    {
+        //        CarBrand = carBrand.ToString(),
+        //        Model = carModel.ToString(),
+        //        Power = DriveSpeed.ToString()
+        //    };
+        //}
     }
 
     private void FixedUpdate()
@@ -73,22 +109,28 @@ public class CarController : MonoBehaviour
 
     private void LateUpdate()
     {
-        SteerBrakes();
+        if (carModel == CarModel.F1Car)
+        {
+            SteerBrakes();
+        }
     }
     private void GetInput()
     {
-        
-        if (mentalCommandsController.IsReadyToDrive)
-        {
+        //if (ui.BrainControls)
+        //{
+        //    //to do
+        //}
+        //else if (!ui.BrainControls)
+        //{
             moveInput = inputData.MoveInput;
-        }
-        steerInput = inputData.SteerInput;
-        brakeInput = inputData.BrakeInput;
-        if (joystick.isActiveAndEnabled)
-        {
-            moveInput = joystick.Vertical;
-            steerInput = joystick.Horizontal;
-        }
+            steerInput = inputData.SteerInput;
+            brakeInput = inputData.BrakeInput;
+        //}
+        //else if (joystick.isActiveAndEnabled)
+        //{
+        //    moveInput = joystick.Vertical;
+        //    steerInput = joystick.Horizontal;
+        //}
     }
     private void Move()
     {
