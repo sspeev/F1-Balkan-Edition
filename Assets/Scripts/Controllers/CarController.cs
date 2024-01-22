@@ -122,9 +122,9 @@ public class CarController : MonoBehaviour
         //}
         //else if (!ui.BrainControls)
         //{
-            moveInput = inputData.MoveInput;
-            steerInput = inputData.SteerInput;
-            brakeInput = inputData.BrakeInput;
+        moveInput = inputData.MoveInput;
+        steerInput = inputData.SteerInput;
+        brakeInput = inputData.BrakeInput;
         //}
         //else if (joystick.isActiveAndEnabled)
         //{
@@ -136,7 +136,10 @@ public class CarController : MonoBehaviour
     {
         foreach (var wheel in wheels)
         {
-            wheel.wheelCollider.motorTorque = moveInput * driveSpeed * maxAcceleration;
+            if (wheel.wheelCollider != null)
+            {
+                wheel.wheelCollider.motorTorque = moveInput * driveSpeed * maxAcceleration;
+            }
         }
     }
 
@@ -180,9 +183,12 @@ public class CarController : MonoBehaviour
     {
         foreach (var wheel in wheels)
         {
-            wheel.wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
-            wheel.wheelModel.transform.SetPositionAndRotation(pos, rot);
-            await Task.Yield();
+            if (wheel.wheelCollider != null)
+            {
+                wheel.wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
+                wheel.wheelModel.transform.SetPositionAndRotation(pos, rot);
+                await Task.Yield();
+            }
         }
     }
 

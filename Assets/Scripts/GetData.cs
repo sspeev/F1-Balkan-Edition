@@ -5,10 +5,17 @@ using UnityEngine.Networking;
 
 public class GetData : MonoBehaviour
 {
-    private IEnumerator LoadCarData()
+    private bool isDataRecieved = false;
+    private void Update()
     {
-
-
+        if (!isDataRecieved)
+        {
+            StartCoroutine(LoadCarData(3));
+        }
+        
+    }
+    private IEnumerator LoadCarData(int carsCount)
+    {
         UnityWebRequest request = UnityWebRequest.Get("https://localhost:7008/Car/get/2");
         yield return request.SendWebRequest();
 
