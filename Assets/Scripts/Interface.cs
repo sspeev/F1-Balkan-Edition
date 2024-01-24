@@ -13,6 +13,9 @@ public class Interface : MonoBehaviour
     private Canvas main;
 
     [SerializeField]
+    private Canvas leaderboard;
+
+    [SerializeField]
     private Toggle brainControls;
 
     public bool BrainControls { get; set; } = false;
@@ -37,6 +40,20 @@ public class Interface : MonoBehaviour
             BrainControls = true;
         }
         else BrainControls = false;
+    }
+
+    public void Leaderboard()
+    {
+        if (leaderboard.gameObject.activeSelf == false)
+        {
+            leaderboard.gameObject.SetActive(true);
+            main.gameObject.SetActive(false);
+        }
+        else
+        {
+            leaderboard.gameObject.SetActive(false);
+            main.gameObject.SetActive(true);
+        }
     }
     public void Exit()
     {
