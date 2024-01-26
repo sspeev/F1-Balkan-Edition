@@ -1823,6 +1823,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingScreen: {fileID: 1392074042}
   progressBar: {fileID: 146081023}
+  cars: []
+  carCameras: []
 --- !u!1 &857379501
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,7 +2090,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: GameScene
+          m_StringArgument: ShowRoomScene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!95 &907357263

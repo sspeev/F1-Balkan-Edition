@@ -15,9 +15,25 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Image progressBar;
 
+    private int index;
+
+    public GameObject[] cars;
+    public GameObject[] carCameras;
+
     private void Awake()
     {
         Instance = this;
+    }
+    private void Start()
+    {
+        if (cars.Length > index)
+        {
+            index = PlayerPrefs.GetInt("carIndex");
+            GameObject car = Instantiate(cars[index]);
+            car.SetActive(true);
+            GameObject carCam = Instantiate(carCameras[index]);
+            carCam.SetActive(true);
+        }
     }
     public async void LoadScene(string sceneName)
     {
