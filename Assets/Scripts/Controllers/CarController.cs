@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
+using UnityEngine.Windows;
 
 /// <summary>
 /// The main controller which controls the movment of the cars and their animations
@@ -89,15 +90,6 @@ public class CarController : MonoBehaviour
         GetInput();
         await AnimateWheels();
         await WheelEffects();
-        //if (carDTO == null)
-        //{
-        //    carDTO = new()
-        //    {
-        //        CarBrand = carBrand.ToString(),
-        //        Model = carModel.ToString(),
-        //        Power = DriveSpeed.ToString()
-        //    };
-        //}
     }
 
     private void FixedUpdate()
@@ -124,6 +116,7 @@ public class CarController : MonoBehaviour
         //{
         moveInput = inputData.MoveInput;
         steerInput = inputData.SteerInput;
+        //steerInput = inputData.RightInput - inputData.LeftInput;
         brakeInput = inputData.BrakeInput;
         //}
         //else if (joystick.isActiveAndEnabled)
@@ -196,13 +189,16 @@ public class CarController : MonoBehaviour
     {
         foreach (var wheel in wheels)
         {
-            if (brakeInput != 0 && wheel.axel == Axel.Rear && wheel.wheelCollider.isGrounded == true && carRb.velocity.magnitude >= 10.0f)
+            if (wheel.wheelCollider != null)
             {
-                wheel.wheelEffectObj.GetComponentInChildren<TrailRenderer>().emitting = true;
-                wheel.smokeParticle.Emit(1);
+                if (brakeInput != 0 && wheel.axel == Axel.Rear && wheel.wheelCollider.isGrounded == true && carRb.velocity.magnitude >= 10.0f)
+                {
+                    wheel.wheelEffectObj.GetComponentInChildren<TrailRenderer>().emitting = true;
+                    wheel.smokeParticle.Emit(1);
+                }
+                else wheel.wheelEffectObj.GetComponentInChildren<TrailRenderer>().emitting = false;
+                await Task.Yield();
             }
-            else wheel.wheelEffectObj.GetComponentInChildren<TrailRenderer>().emitting = false;
-            await Task.Yield();
         }
     }
 }
