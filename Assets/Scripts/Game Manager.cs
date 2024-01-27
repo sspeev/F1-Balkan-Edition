@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -26,14 +24,13 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        if (cars.Length > index)
+        index = PlayerPrefs.GetInt("carIndex");
+        if (cars.Length > index && index > -1)
         {
-            index = PlayerPrefs.GetInt("carIndex");
-            GameObject car = Instantiate(cars[index]);
-            car.SetActive(true);
-            GameObject carCam = Instantiate(carCameras[index]);
-            carCam.SetActive(true);
+            cars[index].SetActive(true);
+            carCameras[index].SetActive(true);
         }
+        index = 0;
     }
     public async void LoadScene(string sceneName)
     {

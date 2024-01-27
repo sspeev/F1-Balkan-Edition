@@ -1,15 +1,13 @@
-using Newtonsoft.Json;
+using Leguar.TotalJSON;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
-using Leguar.TotalJSON;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 public class CarDataWeb : MonoBehaviour
 {
     [SerializeField]
-    private LapTimer currentTime = new();
+    private LapTimer currentTime;
     private Scene currScene;
     private string track;
 

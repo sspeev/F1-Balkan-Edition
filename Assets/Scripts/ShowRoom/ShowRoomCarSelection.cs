@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ShowRoomCarSelection : MonoBehaviour
 {
     public GameObject[] cars;
     public Button next;
     public Button prev;
-    int index;
+    int index = 0;
 
     void Start()
     {
@@ -18,10 +16,11 @@ public class ShowRoomCarSelection : MonoBehaviour
         cars[1].SetActive(false);
         cars[2].SetActive(false);
         cars[3].SetActive(false);
+        cars[4].SetActive(false);
     }
     void Update()
     {
-        if(index == 3)
+        if (index == 4)
         {
             next.interactable = false;
         }
@@ -29,7 +28,7 @@ public class ShowRoomCarSelection : MonoBehaviour
         {
             next.interactable = true;
         }
-        if(index == 0)
+        if (index == 0)
         {
             prev.interactable = false;
         }
@@ -41,34 +40,29 @@ public class ShowRoomCarSelection : MonoBehaviour
 
     public void Next()
     {
-        index ++;
-
-        for(int i = 0; i < cars.Length;i++)
-        {
-            cars[i].SetActive(false);
-            cars[index].SetActive(true);
-        }
-
-        PlayerPrefs.SetInt("carIndex", index);
-        PlayerPrefs.Save();
-    }
-
-    public void Prev()
-    {
-        index --;
+        index++;
 
         for (int i = 0; i < cars.Length; i++)
         {
             cars[i].SetActive(false);
             cars[index].SetActive(true);
         }
-
-        PlayerPrefs.SetInt("carIndex", index);
-        PlayerPrefs.Save();
     }
 
+    public void Prev()
+    {
+        index--;
+
+        for (int i = 0; i < cars.Length; i++)
+        {
+            cars[i].SetActive(false);
+            cars[index].SetActive(true);
+        }
+    }
     public void Race()
     {
         SceneManager.LoadSceneAsync("GameScene");
+        PlayerPrefs.SetInt("carIndex", index);
+        PlayerPrefs.Save();
     }
 }

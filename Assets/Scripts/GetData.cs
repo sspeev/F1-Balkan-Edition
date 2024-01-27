@@ -1,5 +1,9 @@
-using Newtonsoft.Json;
+using Leguar.TotalJSON;
+using Leguar.TotalJSON.Internal;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -10,20 +14,31 @@ public class GetData : MonoBehaviour
     {
         if (!isDataRecieved)
         {
-            StartCoroutine(LoadCarData(3));
+            StartCoroutine(LoadCarData());
         }
-        
+
     }
-    private IEnumerator LoadCarData(int carsCount)
+    private IEnumerator LoadCarData()
     {
-        UnityWebRequest request = UnityWebRequest.Get("https://localhost:7008/Car/get/2");
+        UnityWebRequest request = UnityWebRequest.Get("https://localhost:7008/User");
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Received: " + request.downloadHandler.text);
-            var car = JsonConvert.DeserializeObject<CarDTO>(request.downloadHandler.text);
+            ParseJsonToObject(request.downloadHandler.text);
+            
         }
         else Debug.LogError("Error: " + request.error);
+    }
+    private void ParseJsonToObject(string json)
+    {
+        var wrappedjsonArray = JsonUtility.FromJson<MyWrapper>(json);
+    }
+
+    [Serializable]
+    private class MyWrapper
+    {
+        public List<UserDTO> objects;
     }
 }

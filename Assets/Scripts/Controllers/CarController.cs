@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
-using UnityEngine.Windows;
 
 /// <summary>
 /// The main controller which controls the movment of the cars and their animations
@@ -23,7 +22,8 @@ public class CarController : MonoBehaviour
         Audi,
         Porsche,
         Corvette,
-        Ford
+        Ford,
+        Custom
     }
 
     public enum CarModel

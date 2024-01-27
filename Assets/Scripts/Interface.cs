@@ -37,9 +37,13 @@ public class Interface : MonoBehaviour
         }
         if (brainControls.isOn)
         {
+
             BrainControls = true;
         }
-        else BrainControls = false;
+        else
+        {
+            BrainControls = false;
+        }
     }
 
     public void Leaderboard()
