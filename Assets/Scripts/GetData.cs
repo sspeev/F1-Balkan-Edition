@@ -1,22 +1,42 @@
-using Leguar.TotalJSON;
-using Leguar.TotalJSON.Internal;
-using System;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class GetData : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject car;
+
+    private TMP_Text[] cars_text;
+
+    [SerializeField]
+    private GameObject lapTime;
+
+    private TMP_Text[] lapTimes_text;
+
+    [SerializeField]
+    private GameObject track;
+
+    private TMP_Text[] tracks_text;
+
     private bool isDataRecieved = false;
-    private void Update()
+
+    private void Start()
+    {
+        cars_text = car.GetComponentsInChildren<TMP_Text>();
+        lapTimes_text = lapTime.GetComponentsInChildren<TMP_Text>();
+        tracks_text = track.GetComponentsInChildren<TMP_Text>();
+        RefreshData();
+    }
+    public void RefreshData()
     {
         if (!isDataRecieved)
         {
             StartCoroutine(LoadCarData());
         }
-
     }
     private IEnumerator LoadCarData()
     {
@@ -26,19 +46,14 @@ public class GetData : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Received: " + request.downloadHandler.text);
-            ParseJsonToObject(request.downloadHandler.text);
-            
+            var dataCollection = JsonConvert.DeserializeObject<List<ExportUserDTO>>(request.downloadHandler.text);
+            for (int i = 0; i < dataCollection.Count; i++)
+            {
+                cars_text[i].text = dataCollection[i].Car;
+                lapTimes_text[i].text = dataCollection[i].LapTime;
+                tracks_text[i].text = dataCollection[i].Track;
+            }
         }
         else Debug.LogError("Error: " + request.error);
-    }
-    private void ParseJsonToObject(string json)
-    {
-        var wrappedjsonArray = JsonUtility.FromJson<MyWrapper>(json);
-    }
-
-    [Serializable]
-    private class MyWrapper
-    {
-        public List<UserDTO> objects;
     }
 }

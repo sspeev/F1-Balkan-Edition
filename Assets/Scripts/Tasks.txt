@@ -25,3 +25,10 @@ Q0 - poitive
 Q1 - positive
 Q2 - negative
 Q3 - negative
+
+
+
+
+to do:
+change loading screen from f1 balkan to neuro f1 racing
+//add leaderboard to tutorial track

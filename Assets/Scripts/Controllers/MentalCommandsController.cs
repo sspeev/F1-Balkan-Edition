@@ -36,17 +36,19 @@ public class MentalCommandsController : MonoBehaviour
     private Text MessageLog;
     private InputDataController input;
 
+    [SerializeField]
+    private Interface toggle;
+
     void Start()
     {
         input = GetComponent<InputDataController>();
-        // init EmotivUnityItf without data buffer using
-        _eItf.Init(clientId, clientSecret, appName, appVersion);
-
-        // Start
-        _eItf.Start();
+        if (toggle.BrainControls)
+        {
+            _eItf.Init(clientId, clientSecret, appName, appVersion);
+            _eItf.Start();
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         _timerDataUpdate += Time.deltaTime;
@@ -110,14 +112,13 @@ public class MentalCommandsController : MonoBehaviour
     /// </summary>
     private void CreateSession()
     {
-        Debug.Log("onCreateSessionBtnClick");
         if (!_eItf.IsSessionCreated)
         {
             _eItf.CreateSessionWithHeadset(headSetIdSchool);
         }
         else
         {
-            UnityEngine.Debug.LogError("There is a session created.");
+            Debug.LogError("There is a session created.");
         }
     }
 

@@ -35,15 +35,6 @@ public class Interface : MonoBehaviour
             main.gameObject.SetActive(false);
             options.gameObject.SetActive(true);
         }
-        if (brainControls.isOn)
-        {
-
-            BrainControls = true;
-        }
-        else
-        {
-            BrainControls = false;
-        }
     }
 
     public void Leaderboard()
@@ -58,6 +49,15 @@ public class Interface : MonoBehaviour
             leaderboard.gameObject.SetActive(false);
             main.gameObject.SetActive(true);
         }
+    }
+
+    public void BrainContr()
+    {
+        if (brainControls.isOn)
+        {
+            BrainControls = true;
+        }
+        else BrainControls = false;
     }
     public void Exit()
     {
