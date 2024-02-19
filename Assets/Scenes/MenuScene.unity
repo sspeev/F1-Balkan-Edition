@@ -1076,7 +1076,7 @@ GameObject:
   - component: {fileID: 395986476}
   - component: {fileID: 395986475}
   m_Layer: 5
-  m_Name: TimeTrail
+  m_Name: Grand Prix
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1123,7 +1123,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5e5606e03b83d2b4bb5417baa93c138a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0352fa2df3613c64f91cd50dbdfe3451, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1263,7 +1263,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Time Trail
+  m_text: Grand Prix
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 020609157418b2440b1b012caeb81b4f, type: 2}
   m_sharedMaterial: {fileID: -3241408575642392584, guid: 020609157418b2440b1b012caeb81b4f, type: 2}
@@ -1985,7 +1985,7 @@ GameObject:
   - component: {fileID: 907357262}
   - component: {fileID: 907357263}
   m_Layer: 5
-  m_Name: GrandPrix
+  m_Name: Time trial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2031,7 +2031,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0352fa2df3613c64f91cd50dbdfe3451, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5e5606e03b83d2b4bb5417baa93c138a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4112,7 +4112,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Grand Prix
+  m_text: Time trial
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 020609157418b2440b1b012caeb81b4f, type: 2}
   m_sharedMaterial: {fileID: -3241408575642392584, guid: 020609157418b2440b1b012caeb81b4f, type: 2}
