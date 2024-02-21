@@ -106,24 +106,40 @@ public class CarController : MonoBehaviour
             SteerBrakes();
         }
     }
+    private float forward;
+    private float backward;
+    private float left;
+    private float right;
     private void GetInput()
     {
-        //if (ui.BrainControls)
-        //{
-        //    //to do
-        //}
-        //else if (!ui.BrainControls)
-        //{
-        moveInput = inputData.MoveInput;
-        steerInput = inputData.SteerInput;
-        //steerInput = inputData.RightInput - inputData.LeftInput;
-        brakeInput = inputData.BrakeInput;
-        //}
-        //else if (joystick.isActiveAndEnabled)
-        //{
-        //    moveInput = joystick.Vertical;
-        //    steerInput = joystick.Horizontal;
-        //}
+        forward = inputData.MoveInput;
+        backward = inputData.BrakeInput;
+        left = inputData.LeftInput;
+        right = inputData.RightInput;
+        Debug.Log($"Move: {moveInput}");
+        //steerInput = inputData.SteerInput;
+        steerInput = inputData.LeftInput - inputData.RightInput;
+        Debug.Log($"Steer: {steerInput}");
+
+        if (forward > backward)
+        {
+            moveInput = 1;
+        }
+        else if (backward > forward)
+        {
+            moveInput = -1;
+        }
+        else moveInput = 0;
+
+        if (left > right)
+        {
+            steerInput = -1;
+        }
+        else if (right > left)
+        {
+            steerInput = 1;
+        }
+        else steerInput = 0;
     }
     private void Move()
     {

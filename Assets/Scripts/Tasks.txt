@@ -32,3 +32,8 @@ Q3 - negative
 to do:
 change loading screen from f1 balkan to neuro f1 racing
 //add leaderboard to tutorial track
+
+
+да оправя зипа в сървъра на ноит
+да оправя презентацията
+да оправя скрипта с каската

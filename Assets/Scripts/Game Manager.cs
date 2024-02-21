@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
         } while (scene.progress < 0.9f);
 
-        await Task.Delay(2000);
+        await Task.Delay(500);
 
         scene.allowSceneActivation = true;
         loadingScreen.SetActive(false);

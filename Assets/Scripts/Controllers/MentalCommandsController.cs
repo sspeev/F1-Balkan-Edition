@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EmotivUnityPlugin;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// Here is implamanted the connection to the Emotiv headset and the recived data
@@ -22,8 +23,8 @@ public class MentalCommandsController : MonoBehaviour
     const float TIME_UPDATE_DATA = 1f;
 
 
-    private bool EEGToggle = true;
-    private bool MOTToggle = false;
+    private bool EEGToggle = false;
+    private bool MOTToggle = true;
     private bool PMToggle = false;
     private bool CQToggle = false;
     private bool POWToggle = false;
@@ -42,11 +43,11 @@ public class MentalCommandsController : MonoBehaviour
     void Start()
     {
         input = GetComponent<InputDataController>();
-        if (toggle.BrainControls)
-        {
+        //if (toggle.BrainControls)
+        //{
             _eItf.Init(clientId, clientSecret, appName, appVersion);
             _eItf.Start();
-        }
+        //}
     }
 
     void Update()
@@ -84,11 +85,11 @@ public class MentalCommandsController : MonoBehaviour
 
         string motionHeaderStr = "Motion Header: ";
         string motionDataStr = "Motion Data: ";
-        float multiplyTheData = 2f;
+        float multiplyTheData = 1f;
         input.MoveInput = ExtractData(Channel_t.CHAN_Q0, multiplyTheData);
         input.LeftInput = ExtractData(Channel_t.CHAN_Q1, multiplyTheData);
-        input.RightInput = ExtractData(Channel_t.CHAN_Q3, multiplyTheData);
-        input.BrakeInput = ExtractData(Channel_t.CHAN_Q2, multiplyTheData);
+        input.RightInput = ExtractData(Channel_t.CHAN_Q2, multiplyTheData);
+        input.BrakeInput = ExtractData(Channel_t.CHAN_Q3, multiplyTheData);
         string msgLog = motionHeaderStr + "\n" + motionDataStr;
         MessageLog.text = msgLog;
 
@@ -114,7 +115,7 @@ public class MentalCommandsController : MonoBehaviour
     {
         if (!_eItf.IsSessionCreated)
         {
-            _eItf.CreateSessionWithHeadset(headSetIdSchool);
+            _eItf.CreateSessionWithHeadset(headSetId);
         }
         else
         {
