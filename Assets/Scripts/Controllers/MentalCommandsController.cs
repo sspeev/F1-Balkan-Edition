@@ -85,28 +85,10 @@ public class MentalCommandsController : MonoBehaviour
 
         string motionHeaderStr = "Motion Header: ";
         string motionDataStr = "Motion Data: ";
-<<<<<<< HEAD
-<<<<<<< Updated upstream
         float muliplyerMove = 4f;
         float multiplyerSteer = 1.5f;
         input.MoveInput = ExtractDataMove(Channel_t.CHAN_ACCY, muliplyerMove);
         input.SteerInput = ExtractDataMove(Channel_t.CHAN_ACCZ, multiplyerSteer);
-        //input.LeftInput = ExtractData(Channel_t.CHAN_ACCY, multiplyTheData);
-        //input.RightInput = ExtractData(Channel_t.CHAN_ACCZ, multiplyTheData);
-        //input.BrakeInput = ExtractData(Channel_t.CHAN_ACCY, multiplyTheData);
-=======
-        float multiplyTheData = 1f;
-        input.MoveInput = ExtractData(Channel_t.CHAN_Q3, multiplyTheData);
-        input.LeftInput = ExtractData(Channel_t.CHAN_Q2, multiplyTheData);
-        input.RightInput = ExtractData(Channel_t.CHAN_Q1, multiplyTheData);
-        input.BrakeInput = ExtractData(Channel_t.CHAN_Q0, multiplyTheData);
->>>>>>> Stashed changes
-=======
-        float mutiplyerMove = 4f;
-        float multiplyerSteer = 2f;
-        input.MoveInput = ExtractData(Channel_t.CHAN_ACCY, mutiplyerMove);
-        input.SteerInput = ExtractData(Channel_t.CHAN_ACCZ, multiplyerSteer);
->>>>>>> 8903b9192e3296442ad3891bea2cec01b84c3322
         string msgLog = motionHeaderStr + "\n" + motionDataStr;
         MessageLog.text = msgLog;
         float ExtractDataMove(Channel_t channel, float multiplyTheData)

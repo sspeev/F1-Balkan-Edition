@@ -106,50 +106,11 @@ public class CarController : MonoBehaviour
             SteerBrakes();
         }
     }
-<<<<<<< HEAD
-    //private float forward;
-    //private float backward;
-    //private float steer;
-    //private float left;
-    //private float right;
-    private void GetInput()
-    {
-        moveInput = inputData.MoveInput;
-        //backward = inputData.BrakeInput;
-        steerInput = inputData.SteerInput;
-        //left = inputData.LeftInput;
-        //right = inputData.RightInput;
-        Debug.Log($"Move: {moveInput}");
-        //steerInput = inputData.SteerInput;
-        //steerInput = inputData.LeftInput - inputData.RightInput;
-        Debug.Log($"Steer: {steerInput}");
-
-        //if (forward > backward)
-        //{
-        //    moveInput = 1;
-        //}
-        //else if (backward > forward)
-        //{
-        //    moveInput = -1;
-        //}
-        //else moveInput = 0;
-
-        //if (left > right)
-        //{
-        //    steerInput = -1;
-        //}
-        //else if (right > left)
-        //{
-        //    steerInput = 1;
-        //}
-        //else steerInput = 0;
-=======
     private void GetInput()
     {
         moveInput = inputData.MoveInput;
         steerInput = inputData.SteerInput;
         brakeInput = inputData.BrakeInput;
->>>>>>> 8903b9192e3296442ad3891bea2cec01b84c3322
     }
     private void Move()
     {
