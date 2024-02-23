@@ -37,13 +37,12 @@ public class MentalCommandsController : MonoBehaviour
     private Text MessageLog;
     private InputDataController input;
 
-    [SerializeField]
-    private Interface toggle;
+    private int brainContr;
 
     void Start()
     {
-        input = GetComponent<InputDataController>();
-        if (toggle.BrainControls)
+        brainContr = PlayerPrefs.GetInt("brainContr");
+        if (brainContr == 1)
         {
             _eItf.Init(clientId, clientSecret, appName, appVersion);
             _eItf.Start();

@@ -74,6 +74,8 @@ public class CarController : MonoBehaviour
         }
     }
 
+    private int brainContr;
+
     void Start()
     {
         inputData = GetComponent<InputDataController>();
@@ -108,7 +110,13 @@ public class CarController : MonoBehaviour
     }
     private void GetInput()
     {
-        moveInput = inputData.MoveInput;
+        brainContr = PlayerPrefs.GetInt("brainContr");
+
+        if (brainContr == 1)
+        {
+            moveInput = inputData.MoveInput * -1;
+        }
+        else moveInput = inputData.MoveInput;
         steerInput = inputData.SteerInput;
         brakeInput = inputData.BrakeInput;
     }
@@ -118,7 +126,7 @@ public class CarController : MonoBehaviour
         {
             if (wheel.wheelCollider != null)
             {
-                wheel.wheelCollider.motorTorque = moveInput * driveSpeed * maxAcceleration * -1;
+                wheel.wheelCollider.motorTorque = moveInput * driveSpeed * maxAcceleration;
             }
         }
     }
