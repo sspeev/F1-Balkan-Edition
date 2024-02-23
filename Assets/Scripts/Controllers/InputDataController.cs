@@ -65,9 +65,9 @@ public class InputDataController : MonoBehaviour
     }
     private void GetInput()
     {
-        //moveInput = moveInputAction.action.ReadValue<float>();
-        //steerInput = steerInputAction.action.ReadValue<float>();
-        //brakeInput = brakeInputAction.action.ReadValue<float>();
+        moveInput = moveInputAction.action.ReadValue<float>();
+        steerInput = steerInputAction.action.ReadValue<float>();
+        brakeInput = brakeInputAction.action.ReadValue<float>();
     }
     private void Moving(InputAction.CallbackContext value)
     {

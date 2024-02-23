@@ -106,6 +106,7 @@ public class CarController : MonoBehaviour
             SteerBrakes();
         }
     }
+<<<<<<< HEAD
     //private float forward;
     //private float backward;
     //private float steer;
@@ -142,6 +143,13 @@ public class CarController : MonoBehaviour
         //    steerInput = 1;
         //}
         //else steerInput = 0;
+=======
+    private void GetInput()
+    {
+        moveInput = inputData.MoveInput;
+        steerInput = inputData.SteerInput;
+        brakeInput = inputData.BrakeInput;
+>>>>>>> 8903b9192e3296442ad3891bea2cec01b84c3322
     }
     private void Move()
     {
