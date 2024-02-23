@@ -43,11 +43,11 @@ public class MentalCommandsController : MonoBehaviour
     void Start()
     {
         input = GetComponent<InputDataController>();
-        //if (toggle.BrainControls)
-        //{
+        if (toggle.BrainControls)
+        {
             _eItf.Init(clientId, clientSecret, appName, appVersion);
             _eItf.Start();
-        //}
+        }
     }
 
     void Update()
@@ -85,11 +85,10 @@ public class MentalCommandsController : MonoBehaviour
 
         string motionHeaderStr = "Motion Header: ";
         string motionDataStr = "Motion Data: ";
-        float multiplyTheData = 1f;
-        input.MoveInput = ExtractData(Channel_t.CHAN_Q0, multiplyTheData);
-        input.LeftInput = ExtractData(Channel_t.CHAN_Q1, multiplyTheData);
-        input.RightInput = ExtractData(Channel_t.CHAN_Q2, multiplyTheData);
-        input.BrakeInput = ExtractData(Channel_t.CHAN_Q3, multiplyTheData);
+        float mutiplyerMove = 4f;
+        float multiplyerSteer = 2f;
+        input.MoveInput = ExtractData(Channel_t.CHAN_ACCY, mutiplyerMove);
+        input.SteerInput = ExtractData(Channel_t.CHAN_ACCZ, multiplyerSteer);
         string msgLog = motionHeaderStr + "\n" + motionDataStr;
         MessageLog.text = msgLog;
 
