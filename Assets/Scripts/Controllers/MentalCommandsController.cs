@@ -65,7 +65,7 @@ public class MentalCommandsController : MonoBehaviour
         else
         {
             // update message log
-            MessageLog.color = Color.black;
+            MessageLog.color = Color.white;
         }
         MessageLog.text = _eItf.MessageLog;
         if (!_eItf.IsAuthorizedOK)
@@ -85,15 +85,16 @@ public class MentalCommandsController : MonoBehaviour
 
         string motionHeaderStr = "Motion Header: ";
         string motionDataStr = "Motion Data: ";
-        float multiplyTheData = 1f;
-        input.MoveInput = ExtractData(Channel_t.CHAN_Q0, multiplyTheData);
-        input.LeftInput = ExtractData(Channel_t.CHAN_Q1, multiplyTheData);
-        input.RightInput = ExtractData(Channel_t.CHAN_Q2, multiplyTheData);
-        input.BrakeInput = ExtractData(Channel_t.CHAN_Q3, multiplyTheData);
+        float muliplyerMove = 4f;
+        float multiplyerSteer = 1.5f;
+        input.MoveInput = ExtractDataMove(Channel_t.CHAN_ACCY, muliplyerMove);
+        input.SteerInput = ExtractDataMove(Channel_t.CHAN_ACCZ, multiplyerSteer);
+        //input.LeftInput = ExtractData(Channel_t.CHAN_ACCY, multiplyTheData);
+        //input.RightInput = ExtractData(Channel_t.CHAN_ACCZ, multiplyTheData);
+        //input.BrakeInput = ExtractData(Channel_t.CHAN_ACCY, multiplyTheData);
         string msgLog = motionHeaderStr + "\n" + motionDataStr;
         MessageLog.text = msgLog;
-
-        float ExtractData(Channel_t channel, float multiplyTheData)
+        float ExtractDataMove(Channel_t channel, float multiplyTheData)
         {
             string chanStr = ChannelStringList.ChannelToString(channel);
             double[] data = _eItf.GetMotionData(channel);
@@ -115,7 +116,7 @@ public class MentalCommandsController : MonoBehaviour
     {
         if (!_eItf.IsSessionCreated)
         {
-            _eItf.CreateSessionWithHeadset(headSetId);
+            _eItf.CreateSessionWithHeadset(headSetIdSchool);
         }
         else
         {

@@ -49,10 +49,10 @@ public class CarController : MonoBehaviour
     private float steerInput;
     private float brakeInput;
 
-    [SerializeField] private int maxAcceleration = 30;
+    [SerializeField] private int maxAcceleration = 1;
     [SerializeField] private int brakeAcceleration = 1000;
     [SerializeField] private int maxSteerAngle = 35;
-    [SerializeField] private int driveSpeed = 600;
+    [SerializeField] private int driveSpeed = 100;
 
     public Rigidbody carRb;
     [SerializeField] private Joystick joystick;
@@ -106,40 +106,42 @@ public class CarController : MonoBehaviour
             SteerBrakes();
         }
     }
-    private float forward;
-    private float backward;
-    private float left;
-    private float right;
+    //private float forward;
+    //private float backward;
+    //private float steer;
+    //private float left;
+    //private float right;
     private void GetInput()
     {
-        forward = inputData.MoveInput;
-        backward = inputData.BrakeInput;
-        left = inputData.LeftInput;
-        right = inputData.RightInput;
+        moveInput = inputData.MoveInput;
+        //backward = inputData.BrakeInput;
+        steerInput = inputData.SteerInput;
+        //left = inputData.LeftInput;
+        //right = inputData.RightInput;
         Debug.Log($"Move: {moveInput}");
         //steerInput = inputData.SteerInput;
-        steerInput = inputData.LeftInput - inputData.RightInput;
+        //steerInput = inputData.LeftInput - inputData.RightInput;
         Debug.Log($"Steer: {steerInput}");
 
-        if (forward > backward)
-        {
-            moveInput = 1;
-        }
-        else if (backward > forward)
-        {
-            moveInput = -1;
-        }
-        else moveInput = 0;
+        //if (forward > backward)
+        //{
+        //    moveInput = 1;
+        //}
+        //else if (backward > forward)
+        //{
+        //    moveInput = -1;
+        //}
+        //else moveInput = 0;
 
-        if (left > right)
-        {
-            steerInput = -1;
-        }
-        else if (right > left)
-        {
-            steerInput = 1;
-        }
-        else steerInput = 0;
+        //if (left > right)
+        //{
+        //    steerInput = -1;
+        //}
+        //else if (right > left)
+        //{
+        //    steerInput = 1;
+        //}
+        //else steerInput = 0;
     }
     private void Move()
     {
@@ -147,7 +149,7 @@ public class CarController : MonoBehaviour
         {
             if (wheel.wheelCollider != null)
             {
-                wheel.wheelCollider.motorTorque = moveInput * driveSpeed * maxAcceleration;
+                wheel.wheelCollider.motorTorque = moveInput * driveSpeed * maxAcceleration * -1;
             }
         }
     }
