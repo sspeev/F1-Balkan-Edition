@@ -18,6 +18,8 @@ public class InputDataController : MonoBehaviour
     private InputActionReference brakeInputAction;
     private float brakeInput;
 
+    private int brainContr;
+
     public float MoveInput
     {
         get => moveInput;
@@ -65,9 +67,13 @@ public class InputDataController : MonoBehaviour
     }
     private void GetInput()
     {
-        moveInput = moveInputAction.action.ReadValue<float>();
-        steerInput = steerInputAction.action.ReadValue<float>();
-        brakeInput = brakeInputAction.action.ReadValue<float>();
+        brainContr = PlayerPrefs.GetInt("brainContr");
+        if (brainContr == 0)
+        {
+            moveInput = moveInputAction.action.ReadValue<float>();
+            steerInput = steerInputAction.action.ReadValue<float>();
+            brakeInput = brakeInputAction.action.ReadValue<float>();
+        }
     }
     private void Moving(InputAction.CallbackContext value)
     {

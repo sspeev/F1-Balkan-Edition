@@ -41,6 +41,7 @@ public class MentalCommandsController : MonoBehaviour
 
     void Start()
     {
+        input = GetComponent<InputDataController>();
         brainContr = PlayerPrefs.GetInt("brainContr");
         if (brainContr == 1)
         {
