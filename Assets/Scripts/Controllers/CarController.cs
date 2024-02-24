@@ -112,11 +112,7 @@ public class CarController : MonoBehaviour
     {
         brainContr = PlayerPrefs.GetInt("brainContr");
 
-        if (brainContr == 1)
-        {
-            moveInput = inputData.MoveInput * -1;
-        }
-        else moveInput = inputData.MoveInput;
+        moveInput = inputData.MoveInput;
         steerInput = inputData.SteerInput;
         brakeInput = inputData.BrakeInput;
     }

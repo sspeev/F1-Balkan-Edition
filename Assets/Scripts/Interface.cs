@@ -6,8 +6,6 @@ using UnityEngine.UI;
 /// </summary>
 public class Interface : MonoBehaviour
 {
-    public static Interface Instance;
-
     [SerializeField]
     private Canvas options;
 
@@ -21,13 +19,6 @@ public class Interface : MonoBehaviour
     private Toggle brainControls;
 
     public bool BrainControls { get; set; } = false;
-
-    private void Awake()
-    {
-        Instance = this;
-
-        DontDestroyOnLoad(gameObject);
-    }
 
     public void Home()
     {

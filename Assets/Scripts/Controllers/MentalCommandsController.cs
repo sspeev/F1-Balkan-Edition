@@ -86,7 +86,7 @@ public class MentalCommandsController : MonoBehaviour
         string motionDataStr = "Motion Data: ";
         float muliplyerMove = 4f;
         float multiplyerSteer = 1.5f;
-        input.MoveInput = ExtractDataMove(Channel_t.CHAN_ACCY, muliplyerMove);
+        input.MoveInput = ExtractDataMove(Channel_t.CHAN_ACCY, muliplyerMove) * -1;
         input.SteerInput = ExtractDataMove(Channel_t.CHAN_ACCZ, multiplyerSteer);
         string msgLog = motionHeaderStr + "\n" + motionDataStr;
         MessageLog.text = msgLog;
