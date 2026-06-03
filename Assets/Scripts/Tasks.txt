@@ -1,0 +1,39 @@
+Soft body
+Terrain
+AI cars
+Lobby music visulizer
+Multiplayer
+
+
+client secret: xAwmtNXPNBkczijYGA3clI0jP4JVLhpuvCASolQuVuJrX4E8qmbgpumMUWI7TaJw9Nqi3Zpiz13Wv6WvK2zE2iICuVSjtRGAlcs3bKeBbVgUXHq9XOMLXwYCpIxvGsnn
+
+app name: UnityInsight2.0
+
+app id: com.speev.UnityInsight2.0
+
+client id: JutlzIB6HAAlmK1OnepyRRw7Z44ygsSx5gOsqSHB
+
+fix game manager dependecies on the progress bar
+fix Interface dependencies on the Toggle brain controls
+
+
+	   Q0
+<- Q1      Q3 ->
+	   Q2
+
+Q0 - poitive
+Q1 - positive
+Q2 - negative
+Q3 - negative
+
+
+
+
+to do:
+change loading screen from f1 balkan to neuro f1 racing
+//add leaderboard to tutorial track
+
+
+да оправя зипа в сървъра на ноит
+да оправя презентацията
+да оправя скрипта с каската
