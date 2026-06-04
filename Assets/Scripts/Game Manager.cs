@@ -24,30 +24,59 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        index = PlayerPrefs.GetInt("carIndex");
-
-        // Deactivate all cars and cameras first to ensure only the selected one is active
-        for (int i = 0; i < cars.Length; i++)
+        // Detect if the user has manually enabled exactly one car in the editor hierarchy.
+        // If so, respect that selection (very useful for testing in the editor).
+        int activeCarCount = 0;
+        int activeCarIndex = -1;
+        if (cars != null)
         {
-            if (cars[i] != null)
+            for (int i = 0; i < cars.Length; i++)
             {
-                cars[i].SetActive(false);
+                if (cars[i] != null && cars[i].activeSelf)
+                {
+                    activeCarCount++;
+                    activeCarIndex = i;
+                }
             }
         }
-        for (int i = 0; i < carCameras.Length; i++)
+
+        if (activeCarCount == 1)
         {
-            if (carCameras[i] != null)
+            index = activeCarIndex;
+        }
+        else
+        {
+            index = PlayerPrefs.GetInt("carIndex", 0);
+        }
+
+        // Deactivate all cars and cameras first to ensure only the selected one is active
+        if (cars != null)
+        {
+            for (int i = 0; i < cars.Length; i++)
             {
-                carCameras[i].SetActive(false);
+                if (cars[i] != null)
+                {
+                    cars[i].SetActive(false);
+                }
+            }
+        }
+        if (carCameras != null)
+        {
+            for (int i = 0; i < carCameras.Length; i++)
+            {
+                if (carCameras[i] != null)
+                {
+                    carCameras[i].SetActive(false);
+                }
             }
         }
 
         // Activate only the selected car and its camera
-        if (index >= 0 && index < cars.Length && cars[index] != null)
+        if (cars != null && index >= 0 && index < cars.Length && cars[index] != null)
         {
             cars[index].SetActive(true);
         }
-        if (index >= 0 && index < carCameras.Length && carCameras[index] != null)
+        if (carCameras != null && index >= 0 && index < carCameras.Length && carCameras[index] != null)
         {
             carCameras[index].SetActive(true);
         }
