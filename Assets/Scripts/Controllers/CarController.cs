@@ -11,6 +11,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform frontLeftBrakesTransform, frontRightBreaksTransform;
     private Vector3 localAngle;
     private Quaternion[] wheelRotationOffsets;
+    private Vector3[] wheelLocalOffsets;
     private Quaternion initialLeftBrakeLocalRot;
     private Quaternion initialRightBrakeLocalRot;
 
@@ -77,10 +78,13 @@ public class CarController : MonoBehaviour
         }
     }
 
+    public int BaseDriveSpeed { get; private set; }
+
     private int brainContr;
 
     void Start()
     {
+        BaseDriveSpeed = driveSpeed;
         inputData = GetComponent<InputDataController>();
         carDTO = new()
         {
@@ -99,22 +103,25 @@ public class CarController : MonoBehaviour
             initialRightBrakeLocalRot = frontRightBreaksTransform.localRotation;
         }
 
-        // Cache initial rotation offsets between the WheelCollider and the 3D wheel model mesh.
-        // This corrects any pivot/import rotation mismatches (e.g. if the mesh starts rotated 90 degrees).
+        // Cache initial rotation offsets and position offsets between the WheelCollider and the 3D wheel model mesh.
+        // This corrects any pivot/import rotation and position mismatches (e.g. if the mesh pivot is at the car's origin).
         if (wheels != null)
         {
             wheelRotationOffsets = new Quaternion[wheels.Count];
+            wheelLocalOffsets = new Vector3[wheels.Count];
             for (int i = 0; i < wheels.Count; i++)
             {
                 var wheel = wheels[i];
                 if (wheel.wheelCollider != null && wheel.wheelModel != null)
                 {
-                    wheel.wheelCollider.GetWorldPose(out _, out Quaternion initColliderRot);
+                    wheel.wheelCollider.GetWorldPose(out Vector3 initColliderPos, out Quaternion initColliderRot);
                     wheelRotationOffsets[i] = Quaternion.Inverse(initColliderRot) * wheel.wheelModel.transform.rotation;
+                    wheelLocalOffsets[i] = Quaternion.Inverse(wheel.wheelModel.transform.rotation) * (initColliderPos - wheel.wheelModel.transform.position);
                 }
                 else
                 {
                     wheelRotationOffsets[i] = Quaternion.identity;
+                    wheelLocalOffsets[i] = Vector3.zero;
                 }
             }
         }
@@ -255,8 +262,15 @@ public class CarController : MonoBehaviour
                 {
                     correctiveRot = rot * wheelRotationOffsets[i];
                 }
+
+                // Apply the cached position offset correction to align the visual center with the collider
+                Vector3 correctivePos = pos;
+                if (wheelLocalOffsets != null && i < wheelLocalOffsets.Length)
+                {
+                    correctivePos = pos - correctiveRot * wheelLocalOffsets[i];
+                }
                 
-                wheel.wheelModel.transform.SetPositionAndRotation(pos, correctiveRot);
+                wheel.wheelModel.transform.SetPositionAndRotation(correctivePos, correctiveRot);
             }
         }
     }

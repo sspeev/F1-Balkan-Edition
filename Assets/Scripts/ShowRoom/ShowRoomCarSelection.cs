@@ -12,53 +12,60 @@ public class ShowRoomCarSelection : MonoBehaviour
     void Start()
     {
         index = 0;
-        cars[0].SetActive(true);
-        cars[1].SetActive(false);
-        cars[2].SetActive(false);
-        cars[3].SetActive(false);
-        cars[4].SetActive(false);
+        for (int i = 0; i < cars.Length; i++)
+        {
+            if (cars[i] != null)
+            {
+                cars[i].SetActive(i == index);
+            }
+        }
+        UpdateButtons();
     }
-    void Update()
+
+    private void UpdateButtons()
     {
-        if (index == 4)
+        if (next != null)
         {
-            next.interactable = false;
+            next.interactable = (index < cars.Length - 1);
         }
-        else
+        if (prev != null)
         {
-            next.interactable = true;
-        }
-        if (index == 0)
-        {
-            prev.interactable = false;
-        }
-        else
-        {
-            prev.interactable = true;
+            prev.interactable = (index > 0);
         }
     }
 
     public void Next()
     {
-        index++;
-
-        for (int i = 0; i < cars.Length; i++)
+        if (index < cars.Length - 1)
         {
-            cars[i].SetActive(false);
-            cars[index].SetActive(true);
+            index++;
+            for (int i = 0; i < cars.Length; i++)
+            {
+                if (cars[i] != null)
+                {
+                    cars[i].SetActive(i == index);
+                }
+            }
+            UpdateButtons();
         }
     }
 
     public void Prev()
     {
-        index--;
-
-        for (int i = 0; i < cars.Length; i++)
+        if (index > 0)
         {
-            cars[i].SetActive(false);
-            cars[index].SetActive(true);
+            index--;
+            for (int i = 0; i < cars.Length; i++)
+            {
+                if (cars[i] != null)
+                {
+                    cars[i].SetActive(i == index);
+                }
+            }
+            UpdateButtons();
         }
     }
+
     public void Race()
     {
         SceneManager.LoadSceneAsync("GameScene");

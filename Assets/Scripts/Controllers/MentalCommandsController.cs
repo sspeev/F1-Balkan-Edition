@@ -38,6 +38,7 @@ public class MentalCommandsController : MonoBehaviour
     private InputDataController input;
 
     private int brainContr;
+    private bool _isSubscribed = false;
 
     void Start()
     {
@@ -70,18 +71,28 @@ public class MentalCommandsController : MonoBehaviour
         MessageLog.text = _eItf.MessageLog;
         if (!_eItf.IsAuthorizedOK)
             return;
+
         // Check to call scan headset if no session is created and no scanning headset
-        if (!_eItf.IsSessionCreated && !DataStreamManager.Instance.IsHeadsetScanning)
+        if (!_eItf.IsSessionCreated)
         {
-            // Start scanning headset at headset list screen
-            DataStreamManager.Instance.ScanHeadsets();
-        }
-        if (DataStreamManager.Instance.DetectedHeadsets.Count == 0)
-        {
+            _isSubscribed = false;
+            if (!DataStreamManager.Instance.IsHeadsetScanning)
+            {
+                // Start scanning headset at headset list screen
+                DataStreamManager.Instance.ScanHeadsets();
+            }
+            if (DataStreamManager.Instance.DetectedHeadsets.Count > 0)
+            {
+                CreateSession();
+            }
             return;
         }
-        CreateSession();
-        Subscribe();
+
+        if (!_isSubscribed)
+        {
+            Subscribe();
+            _isSubscribed = true;
+        }
 
         string motionHeaderStr = "Motion Header: ";
         string motionDataStr = "Motion Data: ";

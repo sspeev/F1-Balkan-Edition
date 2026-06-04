@@ -24,10 +24,60 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        index = PlayerPrefs.GetInt("carIndex");
-        if (cars.Length > index && index > -1)
+        // Detect if the user has manually enabled exactly one car in the editor hierarchy.
+        // If so, respect that selection (very useful for testing in the editor).
+        int activeCarCount = 0;
+        int activeCarIndex = -1;
+        if (cars != null)
+        {
+            for (int i = 0; i < cars.Length; i++)
+            {
+                if (cars[i] != null && cars[i].activeSelf)
+                {
+                    activeCarCount++;
+                    activeCarIndex = i;
+                }
+            }
+        }
+
+        if (activeCarCount == 1)
+        {
+            index = activeCarIndex;
+        }
+        else
+        {
+            index = PlayerPrefs.GetInt("carIndex", 0);
+        }
+
+        // Deactivate all cars and cameras first to ensure only the selected one is active
+        if (cars != null)
+        {
+            for (int i = 0; i < cars.Length; i++)
+            {
+                if (cars[i] != null)
+                {
+                    cars[i].SetActive(false);
+                }
+            }
+        }
+        if (carCameras != null)
+        {
+            for (int i = 0; i < carCameras.Length; i++)
+            {
+                if (carCameras[i] != null)
+                {
+                    carCameras[i].SetActive(false);
+                }
+            }
+        }
+
+        // Activate only the selected car and its camera
+        if (cars != null && index >= 0 && index < cars.Length && cars[index] != null)
         {
             cars[index].SetActive(true);
+        }
+        if (carCameras != null && index >= 0 && index < carCameras.Length && carCameras[index] != null)
+        {
             carCameras[index].SetActive(true);
         }
         index = 0;

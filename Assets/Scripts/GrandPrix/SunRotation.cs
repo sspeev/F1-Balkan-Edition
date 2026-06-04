@@ -10,12 +10,14 @@ public class SunRotation : MonoBehaviour
     public new Animation animation;
     void Update()
     {
-        if(Input.GetKey(KeyCode.N))
+        if (animation == null) return;
+
+        if (Input.GetKeyDown(KeyCode.N))
         {
             animation.clip = rotationToNight;
             animation.Play();
         }
-        if (Input.GetKey(KeyCode.M)) 
+        if (Input.GetKeyDown(KeyCode.M)) 
         {
             animation.clip = rotationToDay;
             animation.Play();
