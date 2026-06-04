@@ -20,48 +20,69 @@ public class Interface : MonoBehaviour
 
     public bool BrainControls { get; set; } = false;
 
+    void Start()
+    {
+        if (brainControls != null)
+        {
+            brainControls.isOn = PlayerPrefs.GetInt("brainContr", 0) == 1;
+        }
+    }
+
     public void Home()
     {
-        if (main.gameObject.activeSelf == false)
+        if (main != null && options != null)
         {
-            main.gameObject.SetActive(true);
-            options.gameObject.SetActive(false);
+            if (main.gameObject.activeSelf == false)
+            {
+                main.gameObject.SetActive(true);
+                options.gameObject.SetActive(false);
+            }
         }
     }
     public void Options()
     {
-        if (main.gameObject.activeSelf == true)
+        if (main != null && options != null)
         {
-            main.gameObject.SetActive(false);
-            options.gameObject.SetActive(true);
+            if (main.gameObject.activeSelf == true)
+            {
+                main.gameObject.SetActive(false);
+                options.gameObject.SetActive(true);
+            }
         }
     }
 
     public void Leaderboard()
     {
-        if (leaderboard.gameObject.activeSelf == false)
+        if (leaderboard != null && main != null)
         {
-            leaderboard.gameObject.SetActive(true);
-            main.gameObject.SetActive(false);
-        }
-        else
-        {
-            leaderboard.gameObject.SetActive(false);
-            main.gameObject.SetActive(true);
+            if (leaderboard.gameObject.activeSelf == false)
+            {
+                leaderboard.gameObject.SetActive(true);
+                main.gameObject.SetActive(false);
+            }
+            else
+            {
+                leaderboard.gameObject.SetActive(false);
+                main.gameObject.SetActive(true);
+            }
         }
     }
 
     public void BrainContr()
     {
-        if (brainControls.isOn)
+        if (brainControls != null)
         {
-            BrainControls = true;
-            PlayerPrefs.SetInt("brainContr", 1);
-        }
-        else
-        {
-            BrainControls = false;
-            PlayerPrefs.SetInt("brainContr", 0);
+            if (brainControls.isOn)
+            {
+                BrainControls = true;
+                PlayerPrefs.SetInt("brainContr", 1);
+            }
+            else
+            {
+                BrainControls = false;
+                PlayerPrefs.SetInt("brainContr", 0);
+            }
+            PlayerPrefs.Save();
         }
     }
     public void Exit()

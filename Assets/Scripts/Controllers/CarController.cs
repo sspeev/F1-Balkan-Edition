@@ -77,10 +77,13 @@ public class CarController : MonoBehaviour
         }
     }
 
+    public int BaseDriveSpeed { get; private set; }
+
     private int brainContr;
 
     void Start()
     {
+        BaseDriveSpeed = driveSpeed;
         inputData = GetComponent<InputDataController>();
         carDTO = new()
         {

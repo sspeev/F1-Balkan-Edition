@@ -10,11 +10,14 @@ public class TrackLightsConroller : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             for (int i = 0; i < lights.Length; i++)
             {
-                lights[i].enabled = !lights[i].enabled;
+                if (lights[i] != null)
+                {
+                    lights[i].enabled = !lights[i].enabled;
+                }
             }
         }
     }

@@ -40,16 +40,21 @@ public class LapTimer : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (IsFormationLapEnded)
+        if (other.CompareTag("Player") || other.transform.root.CompareTag("Player"))
         {
-            TimeToPost = timerText.text;
-            UpdateTimerText();
+            if (IsFormationLapEnded)
+            {
+                TimeToPost = timerText.text;
+                UpdateTimerText();
+            }
+            else IsFormationLapEnded = true;
         }
-        else IsFormationLapEnded = true;
-
     }
     private void OnTriggerStay(Collider other)
     {
-        currentTime = 0f;
+        if (other.CompareTag("Player") || other.transform.root.CompareTag("Player"))
+        {
+            currentTime = 0f;
+        }
     }
 }

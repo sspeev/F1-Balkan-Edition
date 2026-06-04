@@ -18,14 +18,20 @@ public class DRSManagmentSystem : MonoBehaviour
     private CarController car;
     private void OnTriggerEnter(Collider other)
     {
+        CarController enteringCar = other.GetComponentInParent<CarController>();
+        if (enteringCar == null || enteringCar != car) return;
+
         DRS.clip = DRSenabled;
         DRS.Play();
-        car.DriveSpeed = 1000;
+        enteringCar.DriveSpeed = 1000;
     }
     private void OnTriggerExit(Collider other)
     {
+        CarController enteringCar = other.GetComponentInParent<CarController>();
+        if (enteringCar == null || enteringCar != car) return;
+
         DRS.clip = DRSdisabled;
         DRS.Play();
-        car.DriveSpeed = 600;
+        enteringCar.DriveSpeed = enteringCar.BaseDriveSpeed;
     }
 }

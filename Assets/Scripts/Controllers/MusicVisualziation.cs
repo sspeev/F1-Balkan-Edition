@@ -1,175 +1,100 @@
 using UnityEngine;
+using System.Collections.Generic;
 
-//TO DO
 /// <summary>
-/// To be implemented
-/// A script which controls the equalizer in the main menu
+/// A self-contained script which controls the equalizer visualizer in the lobby scene.
+/// It retrieves spectrum data from Unity's AudioListener and scales visual pillars.
 /// </summary>
 public class MusicVisualziation : MonoBehaviour
 {
+    [Header("Visualizer Pillars")]
+    [SerializeField] private GameObject pillarPrefab;
+    [SerializeField] private int pillarAmount = 32;
+    [SerializeField] private float radius = 10f;
+    [SerializeField] private float sensitivity = 100f;
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private bool useCircleLayout = true;
 
-//    public AnalyzerSettings settings; //All of our settings
+    [Header("Spectrum Settings")]
+    [SerializeField] private FFTWindow fftWindow = FFTWindow.BlackmanHarris;
 
-//    //private
-//    private float[] spectrum; //Audio Source data
-//    private List<GameObject> pillars; //ref pillars to scale/move with music
-//    private GameObject folder;
-//    private bool isBuilding; //Prevents multi-calls and update while building.
+    private float[] spectrum = new float[512];
+    private List<GameObject> pillars = new List<GameObject>();
+    private GameObject folder;
 
+    void Start()
+    {
+        CreatePillars();
+    }
 
-//    void Start()
-//    {
-//        isBuilding = true;
-//        CreatePillarsByShapes();
-//    }
+    private void CreatePillars()
+    {
+        pillars.Clear();
+        folder = new GameObject("Pillars-" + pillarAmount);
+        folder.transform.SetParent(transform);
+        folder.transform.localPosition = Vector3.zero;
 
-//    private void CreatePillarsByShapes()
-//    {
-//        //get current pillar types
-//        GameObject currentPrefabType = settings.pillar.type == PillarTypes.Cylinder ? settings.Prefabs.CylPrefab : settings.Prefabs.BoxPrefab;
+        for (int i = 0; i < pillarAmount; i++)
+        {
+            GameObject p;
+            if (pillarPrefab != null)
+            {
+                p = Instantiate(pillarPrefab, folder.transform);
+            }
+            else
+            {
+                p = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                p.transform.SetParent(folder.transform);
+            }
 
+            if (useCircleLayout)
+            {
+                float angle = i * Mathf.PI * 2f / pillarAmount;
+                Vector3 pos = new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
+                p.transform.localPosition = pos;
+                p.transform.localRotation = Quaternion.LookRotation(pos);
+            }
+            else
+            {
+                // Line layout
+                float spacing = 2f;
+                float startX = -((pillarAmount - 1) * spacing) / 2f;
+                p.transform.localPosition = new Vector3(startX + i * spacing, 0, 0);
+            }
 
-//        pillars = MathB.ShapesOfGameObjects(currentPrefabType, settings.pillar.radius, (int)settings.pillar.amount, settings.pillar.shape);
+            pillars.Add(p);
+        }
+    }
 
-//        //Organize pillars nicely in this folder under this transform
-//        folder = new GameObject("Pillars-" + pillars.Count);
-//        folder.transform.SetParent(transform);
+    void Update()
+    {
+        if (pillars.Count == 0) return;
 
-//        foreach (var piller in pillars)
-//        {
-//            piller.transform.SetParent(folder.transform);
-//        }
+        AudioListener.GetSpectrumData(spectrum, 0, fftWindow);
 
-//        isBuilding = false;
-//    }
+        for (int i = 0; i < pillars.Count; i++)
+        {
+            // Map pillar to spectrum index
+            int specIndex = Mathf.Clamp(i * (spectrum.Length / pillars.Count), 0, spectrum.Length - 1);
+            float level = spectrum[specIndex] * sensitivity;
 
+            Vector3 previousScale = pillars[i].transform.localScale;
+            previousScale.y = Mathf.Lerp(previousScale.y, Mathf.Max(0.1f, level), speed * Time.deltaTime);
+            pillars[i].transform.localScale = previousScale;
 
-//    void Update()
-//    {
-//        if (Input.GetKey(KeyCode.R)) Rebuild();
-//        if (isBuilding) return;
+            // Adjust position so it scales from the base (assuming pivot is in center, move it up by half scale)
+            Vector3 pos = pillars[i].transform.localPosition;
+            pos.y = previousScale.y * 0.5f;
+            pillars[i].transform.localPosition = pos;
+        }
+    }
 
-//        spectrum = AudioListener.GetSpectrumData((int)settings.spectrum.sampleRate, 0, settings.spectrum.FffWindowType);
-
-
-//        for (int i = 0; i < pillars.Count; i++) //needs to be <= sample rate or error
-//        {
-//            float level = spectrum[i] * settings.pillar.sensitivity * Time.deltaTime * 1000; //0,1 = l,r for two channels
-
-//            //Scale pillars 
-//            Vector3 previousScale = pillars[i].transform.localScale;
-//            previousScale.y = Mathf.Lerp(previousScale.y, level, settings.pillar.speed * Time.deltaTime);
-//            //Add delta time please
-//            pillars[i].transform.localScale = previousScale;
-
-//            //Move pillars up by scale/2
-//            Vector3 pos = pillars[i].transform.position;
-//            pos.y = previousScale.y * .5f;
-//            pillars[i].transform.position = pos;
-//        }
-//    }
-
-//    /// <summary>
-//    /// Called by UI slider onValue changed
-//    /// </summary>
-//    public void Rebuild()
-//    {
-//        if (isBuilding) return;
-
-//        //Destroy the pillars we had, clear the pillar list and start over
-//        isBuilding = true;
-//        pillars.Clear();
-//        DestroyImmediate(folder);
-//        CreatePillarsByShapes();
-//    }
-
-//    /// <summary>
-//    /// Resets to all settings to default in inspector drop down.
-//    /// </summary>
-//    private void Reset()
-//    {
-//        settings.pillar.Reset();
-//        settings.spectrum.Reset();
-//    }
-
-//    #region Dynamic floats and for UI sliders
-
-//    /// <summary>
-//    /// Convert Shapes enum to an int from a float so we can control by UI Slider
-//    /// </summary>
-//    public float PillarShape
-//    {
-//        get { return (int)settings.pillar.shape; }
-//        set
-//        {
-//            //set with UI Slider
-//            int num = (int)Mathf.Clamp(value, 0, 3);
-//            settings.pillar.shape = (Shapes)num;
-//        }
-//    }
-
-//    public float PillarType
-//    {
-//        get { return (int)settings.pillar.type; }
-//        set
-//        {
-//            //set with UI Slider
-//            int num = (int)Mathf.Clamp(value, 0, 2);
-//            settings.pillar.type = (PillarTypes)num;
-//        }
-//    }
-
-//    public float Amount
-//    {
-//        get { return settings.pillar.amount; }
-//        set
-//        {
-//            settings.pillar.amount = Mathf.Clamp(value, 4, 128);
-
-//        }
-//    }
-
-//    public float Radius
-//    {
-//        get { return settings.pillar.radius; }
-//        set { settings.pillar.radius = Mathf.Clamp(value, 2, 256); }
-//    }
-
-
-//    public float Sensitivity
-//    {
-//        get { return settings.pillar.sensitivity; }
-//        set { settings.pillar.sensitivity = Mathf.Clamp(value, 1, 50); }
-//    }
-
-//    public float PillarSpeed
-//    {
-//        get { return settings.pillar.speed; }
-//        set { settings.pillar.speed = Mathf.Clamp(value, 1, 30); }
-//    }
-
-
-//    public float SampleMethod
-//    {
-//        get { return (int)settings.spectrum.FffWindowType; }
-//        set
-//        {
-//            //set with UI Slider
-//            int num = (int)Mathf.Clamp(value, 0, 6);
-//            settings.spectrum.FffWindowType = (FFTWindow)num;
-//        }
-//    }
-
-//    public float SampleRate
-//    {
-//        get { return (int)settings.spectrum.sampleRate; }
-//        set
-//        {
-//            //set with UI Slider
-//            int num = (int)Mathf.Pow(2, 7 + value);//128,256,512,1024,2056
-//            settings.spectrum.sampleRate = (SampleRates)num;
-//        }
-//    }
-
-//    #endregion
+    public void Rebuild()
+    {
+        if (folder != null)
+        {
+            Destroy(folder);
+        }
+        CreatePillars();
+    }
 }
