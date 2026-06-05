@@ -10617,8 +10617,8 @@ MonoBehaviour:
   driveSpeed: 600
   carRb: {fileID: 0}
   joystick: {fileID: 0}
-  carBrand: 0
-  carModel: 0
+  carBrand: 2
+  carModel: 2
 --- !u!114 &7870556231452876015
 MonoBehaviour:
   m_ObjectHideFlags: 0

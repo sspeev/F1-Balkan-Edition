@@ -25,17 +25,14 @@ public class CarController : MonoBehaviour
     {
         Audi,
         Porsche,
-        Corvette,
-        Ford,
-        Custom
+        Mercedes
     }
 
     public enum CarModel
     {
         F1Car,
         _911,
-        ZR11,
-        Mustang
+        W211
     }
 
     [Serializable]
