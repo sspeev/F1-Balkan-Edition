@@ -1,11 +1,11 @@
-# 🏎️ Neuro F1 Racing (formerly F1 Balkan Edition)
+# 🏎️ F1 Balkan Edition
 
 [![Unity 6](https://img.shields.io/badge/Made%20with-Unity%206-black.svg?style=flat-square&logo=unity)](https://unity.com/)
 [![Language C#](https://img.shields.io/badge/Language-C%23-blue.svg?style=flat-square&logo=c-sharp)](https://docs.microsoft.com/en-us/dotnet/csharp/)
 [![Emotiv Insight 2](https://img.shields.io/badge/Headset-Emotiv%20Insight%202-red.svg?style=flat-square)](https://www.emotiv.com/insight/)
 [![Riptide Networking](https://img.shields.io/badge/Network-Riptide%20Networking-orange.svg?style=flat-square)](https://github.com/RiptideNetworking/Riptide)
 
-**Neuro F1 Racing** is a high-speed Formula 1 racing game built on **Unity 6** that bridges real-world neuroscience with virtual motorsport. By utilizing the **Emotiv Insight 2** EEG headset, players can control the steering and acceleration of their vehicle in real-time using mental commands and motion tracking, offering a truly hands-free driving experience.
+**F1 Balkan Edition** is a high-speed Formula 1 racing game built on **Unity 6** that bridges real-world neuroscience with virtual motorsport. By utilizing the **Emotiv Insight 2** EEG headset, players can control the steering and acceleration of their vehicle in real-time using mental commands and motion tracking, offering a truly hands-free driving experience.
 
 ---
 
