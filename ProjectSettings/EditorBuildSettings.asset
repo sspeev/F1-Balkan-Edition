@@ -15,10 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/TutorialTrack.unity
-    guid: 9f4e09d0adc7a954294650dbb5dec8ec
-  - enabled: 1
     path: Assets/Scenes/ShowRoomScene.unity
     guid: a6b709a9dfc9329489c2c9f69263f28a
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 14daaaa6601afcf43b5d61908c7d673a, type: 3}
