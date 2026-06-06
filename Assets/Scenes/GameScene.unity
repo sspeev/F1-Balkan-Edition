@@ -58980,10 +58980,34 @@ PrefabInstance:
       propertyPath: MessageLog
       value: 
       objectReference: {fileID: 1884732624}
+    - target: {fileID: 7916594428288588490, guid: 607b5359d514b7f4b86cac37287bfc8f, type: 3}
+      propertyPath: m_Mass
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 7916594428288588490, guid: 607b5359d514b7f4b86cac37287bfc8f, type: 3}
+      propertyPath: m_ImplicitCom
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7916594428288588490, guid: 607b5359d514b7f4b86cac37287bfc8f, type: 3}
+      propertyPath: m_CenterOfMass.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7916594428288588490, guid: 607b5359d514b7f4b86cac37287bfc8f, type: 3}
+      propertyPath: m_CenterOfMass.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9056753839658902743, guid: 607b5359d514b7f4b86cac37287bfc8f, type: 3}
       propertyPath: joystick
       value: 
       objectReference: {fileID: 2929252285001833957}
+    - target: {fileID: 9056753839658902743, guid: 607b5359d514b7f4b86cac37287bfc8f, type: 3}
+      propertyPath: driveSpeed
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 9056753839658902743, guid: 607b5359d514b7f4b86cac37287bfc8f, type: 3}
+      propertyPath: maxAcceleration
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

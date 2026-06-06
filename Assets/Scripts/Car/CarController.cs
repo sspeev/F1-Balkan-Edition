@@ -215,12 +215,14 @@ public class CarController : MonoBehaviour
 
         float averageDrivingWheelRPM = 0f;
         int drivingWheelCount = 0;
+        float wheelRadius = 0.36f;
         foreach (var w in wheels)
         {
             if ((!isRWD || w.axel == Axel.Rear) && w.wheelCollider != null)
             {
                 averageDrivingWheelRPM += Mathf.Abs(w.wheelCollider.rpm);
                 drivingWheelCount++;
+                wheelRadius = w.wheelCollider.radius;
             }
         }
         if (drivingWheelCount > 0)
@@ -234,7 +236,13 @@ public class CarController : MonoBehaviour
 
         if (shiftDelayTimer <= 0f)
         {
-            if (currentRPM > maxRPM * 0.92f && currentGear < gearRatios.Length - 1)
+            float speed = carRb != null ? carRb.linearVelocity.magnitude : 0f;
+            
+            // Only allow shifting up if the actual speed is at least 65% of the RPM-theoretical speed for the current gear.
+            // This prevents rapid upshifting (and the resulting power-cut shift delay) during stationary wheelspin.
+            float shiftUpMinSpeed = (maxRPM * 0.65f / 60f) * (2f * Mathf.PI * wheelRadius) / totalRatio;
+
+            if (currentRPM > maxRPM * 0.92f && currentGear < gearRatios.Length - 1 && speed >= shiftUpMinSpeed)
             {
                 currentGear++;
                 shiftDelayTimer = shiftDelayDuration;
