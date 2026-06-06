@@ -79,6 +79,22 @@ public class CarController : MonoBehaviour
 
     private int brainContr;
 
+    // Realism Physics Settings
+    private float[] gearRatios = { 3.50f, 2.80f, 2.30f, 1.90f, 1.60f, 1.30f, 1.00f, 0.85f };
+    private float finalDriveRatio = 3.5f;
+    private int currentGear = 0;
+    private float currentRPM = 1000f;
+    private float maxRPM = 7000f;
+    private float idleRPM = 1000f;
+    private float downforceCoeff = 0.5f;
+    private bool isRWD = true;
+    private float shiftDelayTimer = 0f;
+    private const float shiftDelayDuration = 0.15f; // Duration of gear shift interruption
+
+    public float CurrentRPM => currentRPM;
+    public int CurrentGear => currentGear + 1; // 1-based gear
+    public float MaxRPM => maxRPM;
+
     void Start()
     {
         BaseDriveSpeed = driveSpeed;
@@ -89,6 +105,36 @@ public class CarController : MonoBehaviour
             Model = carModel.ToString(),
             Power = DriveSpeed.ToString()
         };
+
+        // Initialize model-specific settings for engine, gearbox, drivetrain and aerodynamics
+        switch (carModel)
+        {
+            case CarModel.F1Car:
+                gearRatios = new float[] { 3.78f, 2.82f, 2.17f, 1.76f, 1.45f, 1.22f, 1.04f, 0.90f }; // F1-style 8-speed
+                finalDriveRatio = 4.0f;
+                maxRPM = 12000f;
+                idleRPM = 2000f;
+                downforceCoeff = 4.5f;
+                isRWD = true;
+                break;
+            case CarModel._911:
+                gearRatios = new float[] { 3.91f, 2.29f, 1.58f, 1.18f, 0.94f, 0.79f, 0.67f }; // PDK 7-speed
+                finalDriveRatio = 3.44f;
+                maxRPM = 7500f;
+                idleRPM = 900f;
+                downforceCoeff = 0.8f;
+                isRWD = true;
+                break;
+            case CarModel.W211:
+                gearRatios = new float[] { 4.38f, 2.86f, 1.92f, 1.37f, 1.00f, 0.82f, 0.70f }; // 7G-Tronic 7-speed
+                finalDriveRatio = 3.07f;
+                maxRPM = 6000f;
+                idleRPM = 700f;
+                downforceCoeff = 0.2f;
+                isRWD = true;
+                break;
+        }
+        currentRPM = idleRPM;
 
         // Cache initial local rotations of front brake caliper bones to prevent Euler conversion drift / 360 spinning.
         if (frontLeftBrakesTransform != null)
@@ -133,6 +179,8 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        UpdateEngineAndGears();
+        ApplyDownforce();
         Move();
         Steer();
         Brake();
@@ -158,25 +206,122 @@ public class CarController : MonoBehaviour
         }
     }
 
+    private void UpdateEngineAndGears()
+    {
+        if (shiftDelayTimer > 0f)
+        {
+            shiftDelayTimer -= Time.fixedDeltaTime;
+        }
+
+        float averageDrivingWheelRPM = 0f;
+        int drivingWheelCount = 0;
+        foreach (var w in wheels)
+        {
+            if ((!isRWD || w.axel == Axel.Rear) && w.wheelCollider != null)
+            {
+                averageDrivingWheelRPM += Mathf.Abs(w.wheelCollider.rpm);
+                drivingWheelCount++;
+            }
+        }
+        if (drivingWheelCount > 0)
+        {
+            averageDrivingWheelRPM /= drivingWheelCount;
+        }
+
+        float totalRatio = gearRatios[currentGear] * finalDriveRatio;
+        float targetRPM = averageDrivingWheelRPM * totalRatio;
+        currentRPM = Mathf.Clamp(targetRPM, idleRPM, maxRPM);
+
+        if (shiftDelayTimer <= 0f)
+        {
+            if (currentRPM > maxRPM * 0.92f && currentGear < gearRatios.Length - 1)
+            {
+                currentGear++;
+                shiftDelayTimer = shiftDelayDuration;
+            }
+            else if (currentRPM < maxRPM * 0.55f && currentGear > 0)
+            {
+                currentGear--;
+                shiftDelayTimer = shiftDelayDuration;
+            }
+        }
+    }
+
+    private void ApplyDownforce()
+    {
+        if (carRb != null)
+        {
+            float speed = carRb.linearVelocity.magnitude;
+            float downforce = downforceCoeff * speed * speed;
+            carRb.AddForce(-transform.up * downforce);
+        }
+    }
+
     private void Move()
     {
-        foreach (var wheel in wheels)
+        if (shiftDelayTimer > 0f)
         {
-            if (wheel.wheelCollider != null)
+            foreach (var w in wheels)
             {
-                wheel.wheelCollider.motorTorque = moveInput * driveSpeed * maxAcceleration;
+                if (w.wheelCollider != null)
+                {
+                    w.wheelCollider.motorTorque = 0f;
+                }
+            }
+            return;
+        }
+
+        float rpmNormalized = currentRPM / maxRPM;
+        float torqueCurveMultiplier = Mathf.Clamp01(1.0f - Mathf.Pow(rpmNormalized - 0.7f, 2f) * 2f);
+        float engineTorque = moveInput * driveSpeed * maxAcceleration * 20f * torqueCurveMultiplier;
+        float totalRatio = gearRatios[currentGear] * finalDriveRatio;
+        float wheelTorque = engineTorque * totalRatio;
+
+        float tcsFactor = 1.0f;
+        foreach (var w in wheels)
+        {
+            if (w.axel == Axel.Rear && w.wheelCollider != null)
+            {
+                if (w.wheelCollider.GetGroundHit(out WheelHit hit))
+                {
+                    float forwardSlip = Mathf.Abs(hit.forwardSlip);
+                    if (forwardSlip > 0.35f)
+                    {
+                        tcsFactor = Mathf.Min(tcsFactor, Mathf.Clamp01(1f - (forwardSlip - 0.35f) * 3f));
+                    }
+                }
+            }
+        }
+        tcsFactor = Mathf.Clamp(tcsFactor, 0.1f, 1.0f);
+        float finalTorque = wheelTorque * tcsFactor;
+
+        foreach (var w in wheels)
+        {
+            if (w.wheelCollider != null)
+            {
+                if (!isRWD || w.axel == Axel.Rear)
+                {
+                    w.wheelCollider.motorTorque = finalTorque;
+                }
+                else
+                {
+                    w.wheelCollider.motorTorque = 0f;
+                }
             }
         }
     }
 
     private void Steer()
     {
-        foreach (var wheel in wheels)
+        float speed = carRb != null ? carRb.linearVelocity.magnitude : 0f;
+        float speedFactor = Mathf.Clamp01(1f - (speed / 60f) * 0.7f);
+        float targetSteerAngle = steerInput * maxSteerAngle * speedFactor;
+
+        foreach (var w in wheels)
         {
-            if (wheel.axel == Axel.Front)
+            if (w.axel == Axel.Front && w.wheelCollider != null)
             {
-                var _steerAngle = steerInput * maxSteerAngle;
-                wheel.wheelCollider.steerAngle = Mathf.Lerp(wheel.wheelCollider.steerAngle, _steerAngle, 0.6f);
+                w.wheelCollider.steerAngle = Mathf.Lerp(w.wheelCollider.steerAngle, targetSteerAngle, 0.6f);
             }
         }
     }
@@ -220,23 +365,31 @@ public class CarController : MonoBehaviour
 
     private void Brake()
     {
-        if (brakeInput != 0 || moveInput == 0)
+        float rollingResistance = 15f;
+        float engineBrakeTorque = 30f;
+
+        foreach (var w in wheels)
         {
-            foreach (var wheel in wheels)
+            if (w.wheelCollider != null)
             {
-                if (wheel.wheelCollider != null)
+                if (brakeInput != 0f)
                 {
-                    wheel.wheelCollider.brakeTorque = 600 * brakeAcceleration;
+                    w.wheelCollider.brakeTorque = brakeInput * 1500f * brakeAcceleration;
+                    w.wheelCollider.motorTorque = 0f;
                 }
-            }
-        }
-        else
-        {
-            foreach (var wheel in wheels)
-            {
-                if (wheel.wheelCollider != null)
+                else if (moveInput == 0f)
                 {
-                    wheel.wheelCollider.brakeTorque = 0;
+                    float coastingBrake = rollingResistance;
+                    if (!isRWD || w.axel == Axel.Rear)
+                    {
+                        coastingBrake += engineBrakeTorque;
+                    }
+                    w.wheelCollider.brakeTorque = coastingBrake;
+                    w.wheelCollider.motorTorque = 0f;
+                }
+                else
+                {
+                    w.wheelCollider.brakeTorque = 0f;
                 }
             }
         }

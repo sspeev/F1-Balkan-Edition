@@ -128,25 +128,36 @@ public class AudioController : MonoBehaviour
 
         if (startedSound)
         {
-            // Gear and pitch simulation
-            ChangeGears();
-            gearChangingSpeed = ChangeGearSpeed(gear);
-            if (input != null && input.MoveInput > 0)
+            // Read gear and RPM from the CarController physics engine
+            if (carController != null)
             {
-                if (simulatedPitch > 2.5f)
-                {
-                    simulatedPitch = 2.5f;
-                }
-                simulatedPitch += gearChangingSpeed * Time.deltaTime;
+                gear = carController.CurrentGear;
+                float normalizedRPM = carController.CurrentRPM / carController.MaxRPM;
+                // Map the normalized RPM (0 to 1) to a pitch range of (1.0f to 2.5f)
+                simulatedPitch = 1.0f + normalizedRPM * 1.5f;
             }
             else
             {
-                DecreaseGears();
-                if (simulatedPitch < 1.0f)
+                // Fallback to fake simulation if no car controller is attached
+                ChangeGears();
+                gearChangingSpeed = ChangeGearSpeed(gear);
+                if (input != null && input.MoveInput > 0)
                 {
-                    simulatedPitch = 1.0f;
+                    if (simulatedPitch > 2.5f)
+                    {
+                        simulatedPitch = 2.5f;
+                    }
+                    simulatedPitch += gearChangingSpeed * Time.deltaTime;
                 }
-                simulatedPitch -= 0.5f * Time.deltaTime;
+                else
+                {
+                    DecreaseGears();
+                    if (simulatedPitch < 1.0f)
+                    {
+                        simulatedPitch = 1.0f;
+                    }
+                    simulatedPitch -= 0.5f * Time.deltaTime;
+                }
             }
 
             if (engineSoundStyle == EngineAudioOptions.Simple)

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Turns the track lights on and off
@@ -10,7 +11,7 @@ public class TrackLightsConroller : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Keyboard.current != null && Keyboard.current.lKey.wasPressedThisFrame)
         {
             for (int i = 0; i < lights.Length; i++)
             {
