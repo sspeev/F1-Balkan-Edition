@@ -5,13 +5,13 @@
 [![Emotiv Insight 2](https://img.shields.io/badge/Headset-Emotiv%20Insight%202-red.svg?style=flat-square)](https://www.emotiv.com/insight/)
 [![Riptide Networking](https://img.shields.io/badge/Network-Riptide%20Networking-orange.svg?style=flat-square)](https://github.com/RiptideNetworking/Riptide)
 
-**F1 Balkan Edition** is a high-speed Formula 1 racing game built on **Unity 6** that bridges real-world neuroscience with virtual motorsport. By utilizing the **Emotiv Insight 2** EEG headset, players can control the steering and acceleration of their vehicle in real-time using mental commands and motion tracking, offering a truly hands-free driving experience.
+**F1 Balkan Edition** is a high-speed Formula 1 racing game built on **Unity 6** that bridges real-world neuroscience with virtual motorsport. By utilizing the **Emotiv Insight 2** EEG headset, players can control the steering and acceleration of their vehicle in real-time using head-motion tracking, offering a truly hands-free driving experience.
 
 ---
 
 ## 🚀 Key Features
 
-* **🧠 Neuro-Controls (EEG Integration):** Drive with your mind! Uses the Emotiv Unity SDK to read motion data (gyro/accel) and mental commands for steering, accelerating, and braking.
+* **🧠 Head-motion controls (Emotiv Insight 2):** The car is driven by the headset's motion sensors, read through the Emotiv Cortex API and Unity plugin. Tilting your head left/right steers, and tilting forward/back accelerates and brakes. I also experimented with the headset's EEG-based mental commands and emotion data, but the signal was too inconsistent for reliable driving, so the final controls use motion data only. Note: the headset was school equipment and is no longer available to me, so the headset mode is not currently tested.
 * **🏎️ Physics-Based Vehicle Mechanics:** Built with Unity's WheelCollider physics, including dynamic DRS (Drag Reduction System) speed boosts and realistic gravel drag deceleration.
 * **🏁 Showroom & Car Selection:** Custom-decimated high-performance vehicle models (including Corvette, Porsche, Mustang, and F1 Audi) fully optimized for optimal frame rates.
 * **📊 Global Leaderboard integration:** Automatically sends lap records to a local REST API and displays them dynamically in the menus.
